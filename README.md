@@ -6,11 +6,15 @@ Observing the microclimate of Tempelhofer Feld
 
 ### Dependencies
 
-Ruff is used for linting and formatting. Pytest is used for testing.
-
+Install the dependencies for development.
 ```bash
 pip install -r requirements-dev.txt
 ```
+
+### Linting and Formatting
+
+
+Ruff is used for linting and formatting.
 
 You can install the vscode extension for ruff to get linting and formatting on save [here](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
 
