@@ -30,5 +30,5 @@ You can install the vscode extension for ruff to get linting and formatting on s
 You need to authenticate with GEE to run the code. This is done with the `gee_auth.py` script.
 
 ```bash
-python thf_climate/gee/gee_auth.py
+python thf_climate/gee/auth.py
 ```
