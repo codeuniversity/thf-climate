@@ -32,3 +32,15 @@ You need to authenticate with GEE to run the code. This is done with the `gee_au
 ```bash
 python thf_climate/gee/auth.py
 ```
+
+If you have authenticated before, you will most likely find your credentials in the following files. Add those credentials to your .env, then run the command above.
+
+Linux/ Mac:
+```
+$HOME/.config/earthengine/credentials
+ ```
+
+ Windows:
+```
+%UserProfile%\.config\earthengine\credentials
+```
