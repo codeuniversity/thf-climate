@@ -27,7 +27,7 @@ You can install the vscode extension for ruff to get linting and formatting on s
 
 ### Authentication
 
-You need to authenticate with GEE to run the code. This is done with the `gee_auth.py` script.
+You need to authenticate with GEE to run the code. This is done with the `auth.py` script.
 
 ```bash
 python thf_climate/gee/auth.py
