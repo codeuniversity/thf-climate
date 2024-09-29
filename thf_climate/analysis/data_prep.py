@@ -1,8 +1,11 @@
 import calendar
+import os
+import sys
 
 import ee
 import pandas as pd
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 from thf_climate.gee.auth import authenticate
 
 # Authenticate and initialize Earth Engine
