@@ -13,6 +13,16 @@ source venv/bin/activate
 pip install -r requirements-dev.txt
 ```
 
+Install Google earth engine module (ee).
+```bash
+pip install earthengine-api
+```
+
+Install dotenv module (ee).
+```bash
+pip install python-dotenv
+```
+
 Copy the env.sample file to .env and set the required variables.
 ```bash
 cp env.sample .env
