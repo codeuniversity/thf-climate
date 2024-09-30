@@ -13,12 +13,12 @@ source venv/bin/activate
 pip install -r requirements-dev.txt
 ```
 
-Install Google earth engine module (ee).
+Install Google earth-engine api module (ee).
 ```bash
 pip install earthengine-api
 ```
 
-Install dotenv module (ee).
+Install dotenv module.
 ```bash
 pip install python-dotenv
 ```
