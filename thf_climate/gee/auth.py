@@ -7,12 +7,27 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"
 import ee
 
 from thf_climate import config
+from thf_climate.config import Environment
 
 
 def authenticate():
-    ee.Authenticate()
-    ee.Initialize(project=config.GOOGLE_PROJECT_ID)
-    print(ee.String("Hello from the Earth Engine servers!").getInfo())
+    if config.ENVIRONMENT == Environment.LOCAL.value:
+        ee.Authenticate()
+        ee.Initialize(project=config.GOOGLE_PROJECT_ID)
+        print("Successfully authenticated - LOCAL Environment")
+    elif (
+        config.ENVIRONMENT == Environment.DEVELOPMENT.value
+        or config.ENVIRONMENT == Environment.PRODUCTION.value
+    ):
+        service_account = config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL
+        credentials = ee.ServiceAccountCredentials(
+            service_account,
+            key_data=config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS,
+        )
+        ee.Initialize(credentials)
+        print("Successfully authenticated - DEVELOPMENT/PRODUCTION Environment")
+    else:
+        raise ValueError("Invalid environment")
 
 
 authenticate()
