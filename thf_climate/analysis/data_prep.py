@@ -4,6 +4,7 @@ import sys
 
 import ee
 import pandas as pd
+import plotly.express as px
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 from thf_climate.gee.auth import authenticate
@@ -15,11 +16,19 @@ authenticate()
 roi = ee.Geometry.Polygon(
     [
         [
-            [13.402040012795936, 52.47446109087355],
-            [13.402040012795936, 52.47345119235675],
-            [13.406965596014118, 52.47345119235675],
-            [13.406965596014118, 52.47446109087355],
-            [13.402040012795936, 52.47446109087355],
+            [13.393926142690503, 52.479459342318194],
+            [13.39035120841146, 52.47528176851594],
+            [13.390475915421774, 52.47274971256647],
+            [13.396461851886613, 52.46831826407774],
+            [13.403694858449427, 52.466849456987205],
+            [13.412964746171014, 52.46897667893188],
+            [13.416622818456005, 52.47090121972539],
+            [13.415209472346135, 52.47626923084667],
+            [13.410969434016465, 52.47728198970532],
+            [13.408101172792328, 52.47869981294684],
+            [13.405856446618543, 52.479459342318194],
+            [13.399662665136049, 52.479889736475684],
+            [13.393926142690503, 52.479459342318194]
         ]
     ]
 )
@@ -31,7 +40,7 @@ end_date = "2023-12-31"
 # Load the Landsat 8 image collection, filtering by date and, according to requirement, cloud cover
 collection = (
     ee.ImageCollection("LANDSAT/LC08/C02/T1_TOA").filterDate(start_date, end_date)
-    # .filter(ee.Filter.lt("CLOUD_COVER", 30))
+      .filter(ee.Filter.lt("CLOUD_COVER", 50))
 )
 
 
@@ -82,7 +91,19 @@ for year in range(2015, 2024):
 # Convert the results to a pandas DataFrame
 df = pd.DataFrame(results)
 
-# Save the results to a CSV file
-df.to_csv("monthly_median_ndvi_thf.csv", index=False)
+# Combine year and month into a single datetime column for easier plotting
+df["date"] = pd.to_datetime(df["year"].astype(str) + "-" + df["month"].astype(str), format="%Y-%B")
 
-print("CSV file has been saved.")
+# Sort the DataFrame by date
+df = df.sort_values(by="date")
+
+# Plot the data using Plotly
+fig = px.line(
+    df,
+    x="date",
+    y="ndvi",
+    title="Monthly Median NDVI (2015-2023) for Tempelhofer Feld",
+    labels={"date": "Date", "ndvi": "NDVI"}
+)
+
+fig.show()
