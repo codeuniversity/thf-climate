@@ -26,11 +26,3 @@ jobs:
           pip install -r requirements-dev.txt
       - name: Run tests
         run: pytest
-
-  enforce-success:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Ensure tests are successful
-        if: ${{ needs.test.result != 'success' }}
-        run: echo "Tests must pass before merging"
