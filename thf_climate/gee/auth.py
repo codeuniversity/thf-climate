@@ -9,6 +9,8 @@ import ee
 from thf_climate import config
 from thf_climate.config import Environment
 
+print(config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS[:50])
+
 
 def authenticate():
     if config.ENVIRONMENT == Environment.LOCAL.value:
