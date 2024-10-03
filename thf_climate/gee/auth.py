@@ -1,3 +1,4 @@
+import base64
 import os
 import sys
 
@@ -22,12 +23,14 @@ def authenticate():
         service_account = config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL
         credentials = ee.ServiceAccountCredentials(
             service_account,
-            key_data=config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS,
+            key_data=base64.b64decode(
+                config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS_B64
+            ).decode("utf-8"),
         )
         ee.Initialize(credentials)
         print("Successfully authenticated - DEVELOPMENT/PRODUCTION Environment")
     else:
-        raise ValueError("Invalid environment")
+        raise ValueError("Invalid environment:" + config.ENVIRONMENT)
 
 
 authenticate()

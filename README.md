@@ -1,5 +1,5 @@
 # thf-climate
-Observing the microclimate of Tempelhofer Feld
+Observing the microclimate of Tempelhofer Feld.
 
 
 ## Development
