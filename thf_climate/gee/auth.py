@@ -11,6 +11,15 @@ from thf_climate.config import Environment
 
 
 def authenticate():
+    print(config.ENVIRONMENT)
+    print(Environment.PRODUCTION.value)
+    print(Environment.PRODUCTION.value)
+    print(
+        (
+            config.ENVIRONMENT == Environment.DEVELOPMENT.value
+            or config.ENVIRONMENT == Environment.PRODUCTION.value
+        )
+    )
     if config.ENVIRONMENT == Environment.LOCAL.value:
         ee.Authenticate()
         ee.Initialize(project=config.GOOGLE_PROJECT_ID)
