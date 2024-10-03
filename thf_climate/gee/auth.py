@@ -27,7 +27,7 @@ def authenticate():
         ee.Initialize(credentials)
         print("Successfully authenticated - DEVELOPMENT/PRODUCTION Environment")
     else:
-        raise ValueError("Invalid environment")
+        raise ValueError("Invalid environment:" + config.ENVIRONMENT)
 
 
 authenticate()
