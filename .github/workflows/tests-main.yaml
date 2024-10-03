@@ -16,16 +16,15 @@ jobs:
           python-version: '3.11'
       - name: debug env
         run: |
-          echo "ENVIRONMENT is: ${{ secrets.ENVIRONMENT }}"
+          echo "ENVIRONMENT is: ${{ vars.ENVIRONMENT }}"
       - name: Set environment variables
-
         run: |
           echo "Setting environment variables"
         env:
-          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+          GOOGLE_PROJECT_ID: ${{ vars.GOOGLE_PROJECT_ID }}
           GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS: ${{ secrets.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS }}
           GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL }}
-          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          ENVIRONMENT: ${{ vars.ENVIRONMENT }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
