@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test:
+  tests-on-main:
     runs-on: ubuntu-latest
     env:
       # Set environment variables globally for all steps within the job
