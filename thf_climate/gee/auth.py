@@ -9,8 +9,6 @@ import ee
 from thf_climate import config
 from thf_climate.config import Environment
 
-print(config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS[:50])
-
 
 def authenticate():
     if config.ENVIRONMENT == Environment.LOCAL.value:
@@ -21,6 +19,11 @@ def authenticate():
         config.ENVIRONMENT == Environment.DEVELOPMENT.value
         or config.ENVIRONMENT == Environment.PRODUCTION.value
     ):
+        raise ValueError(
+            "invalid creds"
+            + config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS[:50]
+        )
+
         service_account = config.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL
         credentials = ee.ServiceAccountCredentials(
             service_account,
