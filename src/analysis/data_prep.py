@@ -7,7 +7,7 @@ import pandas as pd
 import plotly.express as px
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-from thf_climate.gee.auth import authenticate
+from src.gee.auth import authenticate
 
 # Authenticate and initialize Earth Engine
 authenticate()
