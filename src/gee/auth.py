@@ -7,8 +7,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"
 
 import ee
 
-from thf_climate import config
-from thf_climate.config import Environment
+from src import config
+from src.config import Environment
 
 
 def authenticate():
