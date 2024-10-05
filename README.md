@@ -1,31 +1,46 @@
-# thf-climate
-Observing the microclimate of Tempelhofer Feld.
+# Tempelhof Climate
 
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Prerequisites](#prerequisites)
+3. [Project Architecture](#project-architecture)
+4. [Data Sources](#data-sources)
+5. [Installation](#installation)
+6. [Authentication](#authentication)
+7. [Linting and Formatting](#linting-and-formatting)
+8. [Sponsors](#sponsors)
+9. [License](#license)
 
-## Development
+## Project Overview
+**Tempelhof Climate Change Analysis** is a collaborative project by the CODE University software engineering group aimed at observing climate changes occurring at Tempelhof Feld by analyzing satellite images.
 
-### Setup
+## Prerequisites
+- Python 3.x
+- Git
 
-Create a virtual environment and install the dependencies.
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements-dev.txt
-```
+## Project Architecture
+To-do
 
-Copy the env.sample file to .env and set the required variables.
-```bash
-cp env.sample .env
-```
+## Data Sources
+- [Google Earth Engine](https://earthengine.google.com)
+  
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/codeuniversity/thf-climate.git
+   ```
+2. Create a virtual environment and install the dependencies:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements-dev.txt
+   ```
+3. Copy the env.sample file to .env and set the required variables:
+   ```bash
+   cp env.sample .env
+   ```
 
-### Linting and Formatting
-
-
-[Ruff](https://docs.astral.sh/ruff/) is used for linting and formatting.
-
-You can install the vscode extension for ruff to get linting and formatting on save [here](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
-
-### Authentication
+## Authentication
 
 You need to authenticate with GEE to run the code. This is done with the `auth.py` script.
 
@@ -44,3 +59,16 @@ $HOME/.config/earthengine/credentials
 ```
 %UserProfile%\.config\earthengine\credentials
 ```
+
+## Linting and Formatting
+
+[Ruff](https://docs.astral.sh/ruff/) is used for linting and formatting.
+
+You can install the vscode extension for ruff to get linting and formatting on save [here](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+
+## Sponsors
+- **CODE University**
+- **Google Earth Engine**
+
+## License
+This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). See the LICENSE file for more details.
