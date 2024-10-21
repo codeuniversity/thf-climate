@@ -28,7 +28,7 @@ roi = ee.Geometry.Polygon(
             [13.408101172792328, 52.47869981294684],
             [13.405856446618543, 52.479459342318194],
             [13.399662665136049, 52.479889736475684],
-            [13.393926142690503, 52.479459342318194]
+            [13.393926142690503, 52.479459342318194],
         ]
     ]
 )
@@ -39,8 +39,9 @@ end_date = "2023-12-31"
 
 # Load the Landsat 8 image collection, filtering by date and, according to requirement, cloud cover
 collection = (
-    ee.ImageCollection("LANDSAT/LC08/C02/T1_TOA").filterDate(start_date, end_date)
-      .filter(ee.Filter.lt("CLOUD_COVER", 50))
+    ee.ImageCollection("LANDSAT/LC08/C02/T1_TOA")
+    .filterDate(start_date, end_date)
+    .filter(ee.Filter.lt("CLOUD_COVER", 50))
 )
 
 
@@ -92,7 +93,9 @@ for year in range(2015, 2024):
 df = pd.DataFrame(results)
 
 # Combine year and month into a single datetime column for easier plotting
-df["date"] = pd.to_datetime(df["year"].astype(str) + "-" + df["month"].astype(str), format="%Y-%B")
+df["date"] = pd.to_datetime(
+    df["year"].astype(str) + "-" + df["month"].astype(str), format="%Y-%B"
+)
 
 # Sort the DataFrame by date
 df = df.sort_values(by="date")
@@ -103,7 +106,7 @@ fig = px.line(
     x="date",
     y="ndvi",
     title="Monthly Median NDVI (2015-2023) for Tempelhofer Feld",
-    labels={"date": "Date", "ndvi": "NDVI"}
+    labels={"date": "Date", "ndvi": "NDVI"},
 )
 
 fig.show()
