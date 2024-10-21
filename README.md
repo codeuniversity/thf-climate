@@ -23,7 +23,7 @@ To-do
 
 ## Data Sources
 - [Google Earth Engine](https://earthengine.google.com)
-  
+
 ## Installation
 1. Clone the repository:
    ```bash
@@ -39,6 +39,17 @@ To-do
    ```bash
    cp env.sample .env
    ```
+
+## Running the API
+
+Run the API locally using:
+
+```bash
+fastapi dev src/main.py
+```
+
+Serving at: http://127.0.0.1:8000
+API docs: http://127.0.0.1:8000/docs
 
 ## Authentication
 

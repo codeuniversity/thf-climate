@@ -2,3 +2,4 @@ earthengine-api
 python-dotenv
 pandas
 plotly
+fastapi
