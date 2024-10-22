@@ -6,6 +6,8 @@
 3. [Project Architecture](#project-architecture)
 4. [Data Sources](#data-sources)
 5. [Installation](#installation)
+   - [Normal Installation](#normal-installation)
+   - [Docker Installation](#docker-installation)
 6. [Authentication](#authentication)
 7. [Linting and Formatting](#linting-and-formatting)
 8. [Sponsors](#sponsors)
@@ -25,6 +27,8 @@ To-do
 - [Google Earth Engine](https://earthengine.google.com)
 
 ## Installation
+
+### Normal Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/codeuniversity/thf-climate.git
@@ -38,6 +42,20 @@ To-do
 3. Copy the env.sample file to .env and set the required variables:
    ```bash
    cp env.sample .env
+   ```
+
+### Docker Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/codeuniversity/thf-climate.git
+   ```
+2. Build the Docker image:
+   ```bash
+   docker build --tag thf-climate .
+   ```
+3. Run the Docker Container:
+   ```bash
+   docker run --publish 8000:8000 thf-climate
    ```
 
 ## Running the API
