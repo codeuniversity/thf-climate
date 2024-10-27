@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator, ValidationInfo, ValidationError
 from typing import List
 from src.constants import AggregationMethod, LocationName, TemporalResolution, Unit
 from src.validation.utils import (
@@ -15,13 +15,13 @@ class TemperatureDataRequest(BaseModel):
     aggregation: AggregationMethod = Field(..., description="Aggregation method")
 
     # Custom validator to check if timestamps are valid and in the correct order
-    @validator("startDate", "endDate")
+    @field_validator("startDate")
     def validate_timestamp_in_range(cls, v):
         return validate_timestamp_in_range(v)
 
-    @validator("endDate")
-    def end_date_must_be_after_start_date(cls, v, values):
-        return validate_timestamp_startdate_before_enddate(values.get("startDate"), v)
+    @field_validator("endDate")
+    def end_date_must_be_after_start_date(cls, v, info: ValidationInfo):
+        return validate_timestamp_startdate_before_enddate(info.data.get("startDate"), v)
 
 class TemperatureDataMeta(BaseModel):
     startDate: int
