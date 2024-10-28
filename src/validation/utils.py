@@ -11,6 +11,6 @@ def validate_timestamp_in_range(timestamp):
         )
 
 
-def validate_timestamp_startdate_before_enddate(startDate, endDate):
+def validate_timestamp_start_date_before_end_date(startDate, endDate):
     if endDate <= startDate:
         raise HTTPException(status_code=400, detail="endDate must be after startDate")

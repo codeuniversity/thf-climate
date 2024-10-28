@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -7,7 +7,7 @@ from src.constants import AggregationMethod, LocationName, TemporalResolution, U
 
 class DataPoint(BaseModel):
     value: float
-    timestamp: int  # UNIX timestamp in seconds
+    timestamp: Optional[int]  # UNIX timestamp in seconds or nan
 
 
 class BaseMeta(BaseModel):
@@ -18,10 +18,19 @@ class BaseMeta(BaseModel):
     aggregation: AggregationMethod
 
 
-class TemperatureDataMeta(BaseMeta):
+class TemperatureMetaResponse(BaseMeta):
     unit: Unit = Unit.CELSIUS
 
 
-class TemperatureDataResponse(BaseModel):
-    meta: TemperatureDataMeta
+class TemperatureResponse(BaseModel):
+    meta: TemperatureMetaResponse
+    data: List[DataPoint]
+
+
+class NDVIMetaResponse(BaseMeta):
+    unit: Unit = Unit.NORMALIZED_DIFFERENCE
+
+
+class NDVIResponse(BaseMeta):
+    meta: NDVIMetaResponse
     data: List[DataPoint]

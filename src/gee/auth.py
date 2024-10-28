@@ -31,6 +31,3 @@ def authenticate():
         print("Successfully authenticated - DEVELOPMENT/PRODUCTION Environment")
     else:
         raise ValueError("Invalid environment:" + config.ENVIRONMENT)
-
-
-authenticate()
