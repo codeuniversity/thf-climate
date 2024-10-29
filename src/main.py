@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from src.routes.ndvi import ndvi_router
+
 from .weather.router import router as weather_router
 
 app = FastAPI()
@@ -11,3 +13,4 @@ def read_root():
 
 
 app.include_router(weather_router, prefix="/weather", tags=["Temperature Data"])
+app.include_router(ndvi_router, prefix="/index", tags=["NDVI Data"])
