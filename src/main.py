@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from src.routes.temp import weather_router
+from src.routes.ndvi import ndvi_router
 
 from .weather.router import router as weather_router
 
