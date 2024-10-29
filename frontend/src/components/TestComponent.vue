@@ -1,17 +1,17 @@
-// src/components/FetchTemperatureData.vue
 <template>
-  <div>
+  <h3>Hello world!</h3>
+<!--   <div>
     <h3>Temperature Data:</h3>
     <ul v-if="temperatureData">
       <li v-for="(data, index) in temperatureData.data" :key="index">
         Timestamp: {{ data.timestamp }} - Value: {{ data.value }} °C
       </li>
     </ul>
-  </div>
+  </div> -->
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+/* import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 export default {
@@ -46,7 +46,7 @@ export default {
       temperatureData
     }
   }
-}
+} */
 </script>
 
 <style scoped></style>
