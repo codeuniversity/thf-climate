@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator, ValidationInfo, ValidationError
+from pydantic import BaseModel, Field, field_validator, ValidationInfo
 from typing import List
 from src.constants import AggregationMethod, LocationName, TemporalResolution, Unit
 from src.validation.utils import (

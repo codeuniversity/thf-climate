@@ -14,7 +14,7 @@ class TemporalResolution(str, Enum):
 
 
 class LocationName(str, Enum):
-    TEMPELHOFER_FELD = "TEMPELHOFER-FELD"
+    TEMPELHOFER_FELD = "TEMPELHOFER_FELD"
 
 
 class IndexType(str, Enum):
