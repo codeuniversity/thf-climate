@@ -12,8 +12,6 @@ def aggregate_time_series(
     temporal_resolution: TemporalResolution,
     aggregation_method: AggregationMethod,
 ):
-    print({aggregation_method})
-    print(f"temp res {temporal_resolution}")
     # Create a DataFrame from the ndvi_info list
     df = pd.DataFrame(ndvi_info)
 
