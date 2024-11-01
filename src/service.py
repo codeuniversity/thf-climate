@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pandas as pd
 
-from src.constants import AggregationMethod, LocationPolygon, TemporalResolution
+from src.constants import AggregationMethod, LocationName, LocationPolygon, TemporalResolution
 from src.gee.index import get_preprocessed_imagery
 from src.gee.ndvi import get_ndvi_info
 
@@ -49,7 +49,7 @@ def aggregate_time_series(
 
 
 def ndvi_service(
-    location: LocationPolygon,
+    location: LocationName,
     temporal_resolution: TemporalResolution,
     aggregation_method: AggregationMethod,
     start_date: datetime,
