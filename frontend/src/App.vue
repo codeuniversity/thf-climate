@@ -1,7 +1,20 @@
 <template>
-  <h1>Hello world!</h1>
+  <h1 id="app">
+    <TestGraph />
+  </h1>
 </template>
 
-<script setup></script>
+<script>
+  import TestGraph from "./components/TestGraph.vue"
 
+  export default {
+    name: 'App',
+    components: {
+      TestGraph,
+    },
+  };
+</script>
+  
+
+ 
 <style scoped></style>
