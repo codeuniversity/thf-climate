@@ -26,6 +26,8 @@ class IndexType(str, Enum):
 class Unit(str, Enum):
     CELSIUS = "Celsius"
     NORMALIZED_DIFFERENCE = "Normalized Difference"
+    MM = "mm"
+    PERCENT = "%"
 
 
 class LocationPolygon(Enum):

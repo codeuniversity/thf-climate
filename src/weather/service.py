@@ -1,19 +1,20 @@
 from collections import defaultdict
 from datetime import datetime
-from .schemas import TemperatureDataResponse, TemperatureDataMeta, DataPoint
-from .models import TemperatureData
+from .schemas import WeatherDataResponse, WeatherDataMeta, DataPoint, ClimaticVariableUnit
+from .models import WeatherData
 from ..constants import TemporalResolution, AggregationMethod
 from statistics import mean, median
 
 
-async def fetch_temperature_data(request):
+async def fetch_weather_data(request):
     # get and format the data
-    data = TemperatureData.get(request.startDate, request.endDate, request.location)
-    formated_data = await format_temperature_data(data, request.temporalResolution, request.aggregation)
+    data = WeatherData.get(request.climaticVariable, request.startDate, request.endDate, request.location)
+    formated_data = await format_weather_data(data, request.climaticVariable, request.temporalResolution, request.aggregation)
 
-    return TemperatureDataResponse(
-        meta=TemperatureDataMeta(
-            unit="Celsius",
+    return WeatherDataResponse(
+        meta=WeatherDataMeta(
+            climaticVariable=request.climaticVariable,
+            unit=ClimaticVariableUnit[request.climaticVariable],
             location=request.location,
             startDate=request.startDate,
             endDate=request.endDate,
@@ -24,35 +25,35 @@ async def fetch_temperature_data(request):
     )
 
 
-async def format_temperature_data(data, temporalResolution, aggregation):
+async def format_weather_data(data, climaticVariable, temporalResolution, aggregation):
     timestamps = data["hourly"]["time"]
-    temperatures = data["hourly"]["temperature_2m"]
+    values = data["hourly"][climaticVariable]
 
-    # Dictionary to store daily temperatures
-    list_temperatures = defaultdict(list)
+    # Dictionary to store daily values
+    list_values = defaultdict(list)
 
     # aggregate the data on daily or monthly bases
-    for timestamp, temperature in zip(timestamps, temperatures):
+    for timestamp, value in zip(timestamps, values):
         if temporalResolution == TemporalResolution.DAILY:
             date = datetime.fromisoformat(timestamp).date()
         elif temporalResolution == TemporalResolution.MONTHLY:
             date = datetime.fromisoformat(timestamp).strftime('%Y-%m')
             date = datetime.strptime(date + "-01", "%Y-%m-%d")
-        list_temperatures[date].append(temperature)
+        list_values[date].append(value)
 
-    # Calculate aggregation temperatures
+    # Calculate aggregation values
     if aggregation == AggregationMethod.MEAN:
-        list_temperatures = {date: mean(temps) for date, temps in list_temperatures.items()}
+        list_values = {date: mean(temps) for date, temps in list_values.items()}
     elif aggregation == AggregationMethod.MEDIAN:
-        list_temperatures = {date: median(temps) for date, temps in list_temperatures.items()}
+        list_values = {date: median(temps) for date, temps in list_values.items()}
     elif aggregation == AggregationMethod.MAX:
-        list_temperatures = {date: max(temps) for date, temps in list_temperatures.items()}
+        list_values = {date: max(temps) for date, temps in list_values.items()}
     elif aggregation == AggregationMethod.MIN:
-        list_temperatures = {date: min(temps) for date, temps in list_temperatures.items()}
+        list_values = {date: min(temps) for date, temps in list_values.items()}
 
     # data_points
     data_points = []
-    for date, temp in list_temperatures.items():
+    for date, temp in list_values.items():
         timestamp = date.strftime("%s")
         data_points.append(DataPoint(value=temp, timestamp=timestamp))
 

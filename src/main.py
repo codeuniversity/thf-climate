@@ -12,5 +12,5 @@ def read_root():
     return {"Hello": "World"}
 
 
-app.include_router(weather_router, prefix="/weather", tags=["Temperature Data"])
+app.include_router(weather_router, prefix="/weather", tags=["Weather Data"])
 app.include_router(ndvi_router, prefix="/index", tags=["NDVI Data"])

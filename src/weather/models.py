@@ -3,10 +3,10 @@ import requests
 from .utils import LocationLatLong
 from datetime import datetime
 
-class TemperatureData(BaseModel):
+class WeatherData(BaseModel):
 
     @staticmethod
-    def get(startDate, endDate, location):
+    def get(climaticVariable, startDate, endDate, location):
 
         # format inputs
         start_date = datetime.fromtimestamp(startDate).strftime("%Y-%m-%d")
@@ -20,7 +20,7 @@ class TemperatureData(BaseModel):
             "longitude": coordinates[1],
             "start_date": start_date,
             "end_date": end_date,
-            "hourly": "temperature_2m"
+            "hourly": climaticVariable
         }
 
         response = requests.get(url, params=params)

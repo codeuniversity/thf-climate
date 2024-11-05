@@ -3,7 +3,7 @@ from . import schemas, service
 
 router = APIRouter()
 
-@router.get("/temperature", response_model=schemas.TemperatureDataResponse)
-async def get_temperature_data(request: schemas.TemperatureDataRequest = Depends()):
-    return await service.fetch_temperature_data(request)
+@router.get("/weather", response_model=schemas.WeatherDataResponse)
+async def get_weather_data(request: schemas.WeatherDataRequest = Depends()):
+    return await service.fetch_weather_data(request)
 

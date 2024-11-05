@@ -1,5 +1,5 @@
 from typing import List
-
+from enum import Enum
 from pydantic import BaseModel, Field, ValidationInfo, field_validator
 
 from src.constants import AggregationMethod, LocationName, TemporalResolution, Unit
@@ -8,9 +8,19 @@ from src.validation.utils import (
     validate_timestamp_start_date_before_end_date,
 )
 
+class ClimaticVariable(str, Enum):
+    TEMPERATURE = "temperature_2m"
+    HUMIDITY = "relative_humidity_2m"
+    PRECIPITATION = "precipitation"
+
+class ClimaticVariableUnit(str, Enum):
+    temperature_2m = "Celsius"
+    relative_humidity_2m = "%"
+    precipitation = "mm"
 
 # Request for getting the temperature data
-class TemperatureDataRequest(BaseModel):
+class WeatherDataRequest(BaseModel):
+    climaticVariable: ClimaticVariable = Field(..., description="The climatic variable to fetch the weather data")
     startDate: int = Field(..., description="Start date as UNIX timestamp in seconds")
     endDate: int = Field(..., description="End date as UNIX timestamp in seconds")
     location: LocationName = Field(..., description="Location name")
@@ -30,8 +40,9 @@ class TemperatureDataRequest(BaseModel):
             info.data.get("startDate"), v
         )
 
-
-class TemperatureDataMeta(BaseModel):
+class WeatherDataMeta(BaseModel):
+    climaticVariable: str
+    unit: str
     startDate: int
     endDate: int
     unit: Unit
@@ -45,6 +56,6 @@ class DataPoint(BaseModel):
     timestamp: int
 
 
-class TemperatureDataResponse(BaseModel):
-    meta: TemperatureDataMeta
+class WeatherDataResponse(BaseModel):
+    meta: WeatherDataMeta
     data: List[DataPoint]
