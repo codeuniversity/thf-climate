@@ -8,7 +8,7 @@ from statistics import mean, median
 
 async def fetch_weather_data(request):
     # get and format the data
-    data = WeatherData.get(request.climaticVariable, request.startDate, request.endDate, request.location)
+    data = WeatherData.get(request.climaticVariable, request.temporalResolution, request.startDate, request.endDate, request.location)
     formated_data = await format_weather_data(data, request.climaticVariable, request.temporalResolution, request.aggregation)
 
     return WeatherDataResponse(
