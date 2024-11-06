@@ -15,6 +15,10 @@ def aggregate_time_series(
     # Create a DataFrame from the ndvi_info list
     df = pd.DataFrame(ndvi_info)
 
+    # Check if ndvi_info is empty and create an empty DataFrame with a 'timestamp' column if necessary
+    if df.empty:
+        df = pd.DataFrame(columns=["timestamp", "value"])
+
     # Set the timestamp as the DataFrame index
     df.set_index("timestamp", inplace=True)
 
