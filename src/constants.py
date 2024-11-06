@@ -28,6 +28,7 @@ class Unit(str, Enum):
     NORMALIZED_DIFFERENCE = "Normalized Difference"
     MM = "mm"
     PERCENT = "%"
+    M3 = "m³/m³"
 
 
 class LocationPolygon(Enum):

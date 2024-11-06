@@ -1,6 +1,6 @@
 from collections import defaultdict
 from datetime import datetime
-from .schemas import WeatherDataResponse, WeatherDataMeta, DataPoint, ClimaticVariableUnit
+from .schemas import WeatherDataResponse, WeatherDataMeta, DataPoint, WeatherVariableUnit
 from .models import WeatherData
 from ..constants import TemporalResolution, AggregationMethod
 from statistics import mean, median
@@ -8,13 +8,13 @@ from statistics import mean, median
 
 async def fetch_weather_data(request):
     # get and format the data
-    data = WeatherData.get(request.climaticVariable, request.temporalResolution, request.startDate, request.endDate, request.location)
-    formated_data = await format_weather_data(data, request.climaticVariable, request.temporalResolution, request.aggregation)
+    data = WeatherData.get(request.weatherVariable, request.temporalResolution, request.startDate, request.endDate, request.location)
+    formated_data = await format_weather_data(data, request.weatherVariable, request.temporalResolution, request.aggregation)
 
     return WeatherDataResponse(
         meta=WeatherDataMeta(
-            climaticVariable=request.climaticVariable,
-            unit=ClimaticVariableUnit[request.climaticVariable],
+            weatherVariable=request.weatherVariable,
+            unit=WeatherVariableUnit[request.weatherVariable],
             location=request.location,
             startDate=request.startDate,
             endDate=request.endDate,
@@ -25,9 +25,9 @@ async def fetch_weather_data(request):
     )
 
 
-async def format_weather_data(data, climaticVariable, temporalResolution, aggregation):
+async def format_weather_data(data, weatherVariable, temporalResolution, aggregation):
     timestamps = data["hourly"]["time"]
-    values = data["hourly"][climaticVariable]
+    values = data["hourly"][weatherVariable]
 
     # Dictionary to store daily values
     list_values = defaultdict(list)

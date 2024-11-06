@@ -8,7 +8,7 @@ from calendar import monthrange
 class WeatherData(BaseModel):
 
     @staticmethod
-    def get(climaticVariable, temporalResolution, startDate, endDate, location):
+    def get(weatherVariable, temporalResolution, startDate, endDate, location):
 
         # format inputs
         if temporalResolution == TemporalResolution.DAILY:
@@ -28,7 +28,7 @@ class WeatherData(BaseModel):
             "longitude": coordinates[1],
             "start_date": start_date,
             "end_date": end_date,
-            "hourly": climaticVariable
+            "hourly": weatherVariable
         }
 
         response = requests.get(url, params=params)

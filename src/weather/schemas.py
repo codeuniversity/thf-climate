@@ -8,19 +8,23 @@ from src.validation.utils import (
     validate_timestamp_start_date_before_end_date,
 )
 
-class ClimaticVariable(str, Enum):
+class WeatherVariable(str, Enum):
     TEMPERATURE = "temperature_2m"
     HUMIDITY = "relative_humidity_2m"
     PRECIPITATION = "precipitation"
+    SOIL_TEMPERATURE = "soil_temperature_0_to_7cm"
+    SOIL_MOISTURE = "soil_moisture_0_to_7cm"
 
-class ClimaticVariableUnit(str, Enum):
+class WeatherVariableUnit(str, Enum):
     temperature_2m = "Celsius"
+    soil_temperature_0_to_7cm = "Celsius"
     relative_humidity_2m = "%"
     precipitation = "mm"
+    soil_moisture_0_to_7cm = "m³/m³"
 
 # Request for getting the temperature data
 class WeatherDataRequest(BaseModel):
-    climaticVariable: ClimaticVariable = Field(..., description="The climatic variable to fetch the weather data")
+    weatherVariable: WeatherVariable = Field(..., description="The weather variable to fetch the weather data")
     startDate: int = Field(..., description="Start date as UNIX timestamp in seconds")
     endDate: int = Field(..., description="End date as UNIX timestamp in seconds")
     location: LocationName = Field(..., description="Location name")
@@ -41,7 +45,7 @@ class WeatherDataRequest(BaseModel):
         )
 
 class WeatherDataMeta(BaseModel):
-    climaticVariable: str
+    weatherVariable: str
     unit: str
     startDate: int
     endDate: int
