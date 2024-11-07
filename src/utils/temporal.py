@@ -39,3 +39,14 @@ def last_time_of_month(dt: datetime) -> datetime:
 
 def get_start_of_day(dt: datetime) -> datetime:
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def get_month_start(unix_timestamp: int) -> int:
+    # Convert Unix timestamp to a datetime object in UTC
+    dt = datetime.fromtimestamp(unix_timestamp, tz=timezone.utc)
+
+    # Create a new datetime object for the beginning of the month
+    month_start = datetime(dt.year, dt.month, 1, tzinfo=timezone.utc)
+
+    # Convert back to Unix timestamp
+    return int(month_start.timestamp())
