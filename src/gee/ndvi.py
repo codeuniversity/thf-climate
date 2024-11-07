@@ -62,6 +62,7 @@ def get_ndvi_info(
     combined_results = [
         {"timestamp": ts, "value": val}
         for ts, val in zip(timestamp_list, index_value_list)
+        if val != INDEX_NULL_STRING
     ]
 
     return combined_results
