@@ -1,4 +1,3 @@
-import math
 from datetime import datetime
 
 from fastapi import APIRouter, Query
@@ -50,14 +49,6 @@ async def get_temperature_data(
         end_date=rounded_end_date,
     )
 
-    # Ensure all timestamps are converted to integers (UNIX timestamps)
-    formatted_data = [
-        {
-            "timestamp": int(dp["timestamp"].timestamp()),
-            "value": None if math.isnan(dp["value"]) else dp["value"],
-        }
-        for dp in data
-    ]
     response = {
         "meta": {
             "location": LocationName[location].value,
@@ -67,7 +58,7 @@ async def get_temperature_data(
             "aggregation": AggregationMethod[aggregation].value,
             "unit": Unit.NORMALIZED_DIFFERENCE.value,
         },
-        "data": formatted_data,
+        "data": data,
     }
 
     print(response)
