@@ -6,7 +6,8 @@
 3. [Project Architecture](#project-architecture)
 4. [Data Sources](#data-sources)
 5. [Installation](#installation)
-   - [Normal Installation](#normal-installation)
+   - [Backend Installation](#backend-installation)
+   - [Frontend Installation](#frontend-installation)
    - [Docker Installation](#docker-installation)
 6. [Authentication](#authentication)
 7. [Linting and Formatting](#linting-and-formatting)
@@ -28,21 +29,39 @@ To-do
 
 ## Installation
 
-### Normal Installation
+### Backend Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/codeuniversity/thf-climate.git
    ```
-2. Create a virtual environment and install the dependencies:
+2. Change directory to backend (from thf-climate):
+   ```bash
+   cd backend
+   ```
+3. Create a virtual environment and install the dependencies:
    ```bash
    python -m venv venv
    source venv/bin/activate
    pip install -r requirements-dev.txt
    ```
-3. Copy the env.sample file to .env and set the required variables:
+4. Copy the env.sample file to .env and set the required variables:
    ```bash
    cp env.sample .env
    ```
+
+### Frontend Installation
+1. Change directory to frontend (from thf-climate):
+   ```bash
+   cd frontend
+   ```
+2. Install NPM packages:
+   ```bash
+   npm install
+   ````
+3. Run project locally:
+   ```bash
+   npm run dev
+   ````
 
 ### Docker Installation
 1. Clone the repository:
