@@ -2,15 +2,23 @@ from pydantic import BaseModel
 import requests
 from .utils import LocationLatLong
 from datetime import datetime
+from ..constants import TemporalResolution
+from calendar import monthrange
 
-class TemperatureData(BaseModel):
+class WeatherData(BaseModel):
 
     @staticmethod
-    def get(startDate, endDate, location):
+    def get(weatherVariable, temporalResolution, startDate, endDate, location):
 
         # format inputs
-        start_date = datetime.fromtimestamp(startDate).strftime("%Y-%m-%d")
-        end_date = datetime.fromtimestamp(endDate).strftime("%Y-%m-%d")
+        if temporalResolution == TemporalResolution.DAILY:
+            start_date = datetime.fromtimestamp(startDate).strftime("%Y-%m-%d")
+            end_date = datetime.fromtimestamp(endDate).strftime("%Y-%m-%d")
+        elif temporalResolution == TemporalResolution.MONTHLY:
+            start_date = datetime.fromtimestamp(startDate).replace(day=1).strftime("%Y-%m-%d")
+            dt = datetime.fromtimestamp(endDate)
+            last_day = monthrange(dt.year, dt.month)[1]
+            end_date = dt.replace(day=last_day).strftime("%Y-%m-%d")
         coordinates = LocationLatLong[location].value
 
         # get the data from open-meteo api
@@ -20,7 +28,7 @@ class TemperatureData(BaseModel):
             "longitude": coordinates[1],
             "start_date": start_date,
             "end_date": end_date,
-            "hourly": "temperature_2m"
+            "hourly": weatherVariable
         }
 
         response = requests.get(url, params=params)
