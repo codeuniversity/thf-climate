@@ -19,12 +19,13 @@ export default {
     const temperatureData = ref(null)
 
     const fetchTemperatureData = async () => {
-      const apiUrl = 'http://localhost:8000/weather/temp'
+      const apiUrl = 'http://localhost:8000/weather/index'
       
       const params = {
+        weatherVariable: "temperature_2m",
         startDate: 1672527600,
         endDate: 1675119600,
-        location: "TEMPELHOFER-FELD",
+        location: "TEMPELHOFER_FELD",
         temporalResolution: "DAILY",
         aggregation: "MEAN",
       }

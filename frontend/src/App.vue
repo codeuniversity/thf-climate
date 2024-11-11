@@ -7,13 +7,13 @@
 
 <script>
   import TestComponent from "./components/TestComponent.vue"
-  import MedianTempGraph from "./components/TestGraphOne.vue"
+  // import MedianTempGraph from "./components/TestGraphOne.vue"
 
   export default {
     name: 'App',
     components: {
       TestComponent,
-      MedianTempGraph
+      // MedianTempGraph
     }
   };
 </script>
