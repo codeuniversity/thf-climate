@@ -37,23 +37,16 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west3-docker.pkg.dev
 
-      - name: Docker Login using Access Token
-        run: |
-          ACCESS_TOKEN=$(gcloud auth print-access-token)
-          echo $ACCESS_TOKEN | docker login -u oauth2accesstoken --password-stdin https://europe-west3-docker.pkg.dev
-
       - name: Build Docker image
         working-directory: ./backend
         run: |
           docker buildx build --platform linux/amd64 \
-            -t $IMAGE_NAME:latest \
-            -t $IMAGE_NAME:${{ github.sha }} .
+            -t $IMAGE_NAME:latest .
 
       - name: Push Docker image to Artifact Registry
         working-directory: ./backend
         run: |
           docker push $IMAGE_NAME:latest
-          docker push $IMAGE_NAME:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         working-directory: ./backend
