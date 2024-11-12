@@ -19,7 +19,7 @@ jobs:
 
       - name: Set up Google Cloud credentials
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-service-key.json"
+          printf '%s' "${{ secrets.GCP_SA_KEY }}" > ${HOME}/gcloud-service-key.json
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
@@ -30,7 +30,7 @@ jobs:
 
       - name: Activate Service Account
         run: |
-          gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
+          gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
           gcloud config set account $(gcloud config get-value core/account)
 
       - name: Configure Docker for Google Artifact Registry
