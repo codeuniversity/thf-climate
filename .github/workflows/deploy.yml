@@ -28,9 +28,10 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west3-docker.pkg.dev
 
-      - name: Docker Login to Artifact Registry
+      - name: Docker Login using Access Token
         run: |
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://europe-west3-docker.pkg.dev
+          ACCESS_TOKEN=$(gcloud auth print-access-token)
+          echo $ACCESS_TOKEN | docker login -u oauth2accesstoken --password-stdin https://europe-west3-docker.pkg.dev
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
