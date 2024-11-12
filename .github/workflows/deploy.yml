@@ -6,6 +6,7 @@ on:
       - feature-deploy
 
 env:
+  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
   IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate
 
 jobs:
