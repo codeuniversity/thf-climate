@@ -28,6 +28,11 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
+      - name: Activate Service Account
+        run: |
+          gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          gcloud config set account $(gcloud config get-value core/account)
+
       - name: Configure Docker for Google Artifact Registry
         run: |
           gcloud auth configure-docker europe-west3-docker.pkg.dev
