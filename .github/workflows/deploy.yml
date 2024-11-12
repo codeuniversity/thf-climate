@@ -19,7 +19,7 @@ jobs:
 
       - name: Set up Google Cloud credentials
         run: |
-          printf '%s' "${{ secrets.GCP_SA_KEY }}" > ${HOME}/gcloud-service-key.json
+          echo "${{ secrets.GCP_SA_KEY_BASE64 }}" | base64 --decode > ${HOME}/gcloud-service-key.json
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
