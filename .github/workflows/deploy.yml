@@ -1,0 +1,47 @@
+name: Auto Deploy to Google Cloud
+
+on:
+  push:
+    branches:
+      - feature-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Docker for Google Artifact Registry
+        working-directory: ./backend
+        run: |
+          gcloud auth configure-docker europe-west3-docker.pkg.dev
+
+      - name: Build Docker image
+        working-directory: ./backend
+        run: |
+          docker buildx build --platform linux/amd64 -t europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate:latest .
+
+      - name: Push Docker image to Artifact Registry
+        working-directory: ./backend
+        run: |
+          docker push europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate:latest
+
+      - name: Deploy to Cloud Run
+        working-directory: ./backend
+        run: |
+          gcloud run deploy thf-climate-run \
+            --image=europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate:latest \
+            --port=8000 \
+            --region=europe-west3 \
+            --allow-unauthenticated \
+            --min-instances=1 \
+            --max-instances=5
