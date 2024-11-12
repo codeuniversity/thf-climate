@@ -27,8 +27,9 @@ jobs:
       - name: Configure Docker for Google Artifact Registry
         run: |
           gcloud auth configure-docker europe-west3-docker.pkg.dev
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Inspect Docker Configuration
+        run: cat /home/runner/.docker/config.json
 
       - name: Build Docker image
         working-directory: ./backend
@@ -42,8 +43,6 @@ jobs:
         run: |
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:${{ github.sha }}
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
       - name: Deploy to Cloud Run
         working-directory: ./backend
