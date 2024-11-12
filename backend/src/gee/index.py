@@ -5,71 +5,52 @@ import ee
 
 from src.gee.auth import authenticate
 
+DAY_FEATURE_LABEL = "DAY_ONLY"
+
 
 def get_preprocessed_imagery(
-    coordinates: ee.Geometry, start_date: datetime, end_date: datetime
-) -> list:
+    coordinates: list, start_date: datetime, end_date: datetime
+) -> ee.ImageCollection:
     authenticate()
 
     aoi = ee.Geometry.Polygon(coordinates)
-    # area_m2 = aoi.area().getInfo()
 
-    # Get imagery collection
+    # Get imagery
     image_collection = get_imagery(aoi, start_date, end_date)
-    image_list = image_collection.toList(image_collection.size())
 
-    # List to hold masked images
-    masked_images = []
+    # Preprocess the imagery
+    mosaicked_collection = get_mosaicked_by_date_collection(image_collection)
+    clipped_collection = mosaicked_collection.map(lambda img: img.clip(aoi))
+    cloud_masked_collection = clipped_collection.map(lambda img: get_cloud_masked(img))
 
-    # Loop through the collection in Python
-    for i in range(image_list.size().getInfo()):
-        image = ee.Image(image_list.get(i))
-
-        # Get cloud and shadow masks
-        cloud_mask = get_cloud_vector_mask(image, aoi)
-        cloud_shadow_mask = get_cloud_shadow_vector_mask(image, aoi)
-
-        # Combine the cloud and shadow masks using logical OR
-        combined_mask = cloud_mask.Or(cloud_shadow_mask)
-
-        # Apply the combined mask to the image to mask out clouds and shadows
-        masked_image = image.updateMask(combined_mask.Not())
-
-        # Add the masked image reference to the list
-        masked_images.append(masked_image)
-
-    return masked_images
+    return cloud_masked_collection
 
 
-def get_cloud_vector_mask(image: ee.Image, aoi: ee.Geometry.Polygon) -> ee.Image:
-    clipped_image = image.clip(aoi)
-    scl = clipped_image.select("SCL")
-    # Create a mask for classes 10, 9, and 8 (could add 7 as needed)
+def get_cloud_masked(image: ee.Image) -> ee.Image:
+    """Applies cloud and shadow masks to a single image."""
+    # Get cloud and shadow masks
+    cloud_mask = get_cloud_vector_mask(image)
+    cloud_shadow_mask = get_cloud_shadow_vector_mask(image)
+
+    # Combine the cloud and shadow masks using logical OR
+    combined_mask = cloud_mask.Or(cloud_shadow_mask)
+
+    # Apply the combined mask to the image to mask out clouds and shadows
+    return image.updateMask(combined_mask.Not())
+
+
+def get_cloud_vector_mask(image: ee.Image) -> ee.Image:
+    scl = image.select("SCL")
+    # Create a mask for classes 10, 9, and 8 (cloud, cirrus, and high probability cloud)
     cloud_mask = scl.eq(10).Or(scl.eq(9)).Or(scl.eq(8))
     return cloud_mask
 
 
-def get_cloud_shadow_vector_mask(image: ee.Image, aoi: ee.Geometry.Polygon) -> ee.Image:
-    clipped_image = image.clip(aoi)
-    scl = clipped_image.select("SCL")
+def get_cloud_shadow_vector_mask(image: ee.Image) -> ee.Image:
+    scl = image.select("SCL")
     # Create a mask for cloud shadows (class 3)
     cloud_shadow_mask = scl.eq(3)
     return cloud_shadow_mask
-
-
-def calculate_masked_area(mask: ee.Image, aoi: ee.Geometry, scale: int = 10) -> float:
-    # Calculate the area of masked pixels by multiplying by pixel area
-    masked_area = (
-        mask.multiply(ee.Image.pixelArea())
-        .rename("area")  # Rename the band to "area" for clarity
-        .reduceRegion(
-            reducer=ee.Reducer.sum(), geometry=aoi, scale=scale, maxPixels=1e8
-        )
-        .get("area")  # Access the renamed key
-        .getInfo()
-    )
-
-    return masked_area
 
 
 def get_imagery(
@@ -83,9 +64,33 @@ def get_imagery(
     end_date_str = end_date.strftime("%Y-%m-%d")
 
     collection = (
-        # ee.ImageCollection('COPERNICUS/S2')
         ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
         .filterDate(start_date_str, end_date_str)
         .filterBounds(aoi)
+        .filter(ee.Filter.contains(".geo", aoi))
+        .filter(ee.Filter.lte("CLOUDY_PIXEL_PERCENTAGE", 95))
     )
     return collection
+
+
+def get_mosaicked_by_date_collection(image_collection):
+    # Add date strings as a property on each image
+    image_collection = image_collection.map(
+        lambda img: img.set(DAY_FEATURE_LABEL, img.date().format("YYYY-MM-dd"))
+    )
+    # Get unique dates
+    dates = image_collection.aggregate_array(DAY_FEATURE_LABEL).distinct()
+
+    # Function to mosaic images by date
+    def mosaic_by_date(date_str):
+        date_str = ee.String(date_str)
+        mosaicked_image = (
+            image_collection.filter(ee.Filter.eq(DAY_FEATURE_LABEL, date_str))
+            .mosaic()
+            .set("system:time_start", ee.Date(date_str).millis())
+            .set(DAY_FEATURE_LABEL, date_str)
+        )
+        return mosaicked_image
+
+    # Apply mosaic by date and create a new collection
+    return ee.ImageCollection(dates.map(mosaic_by_date))
