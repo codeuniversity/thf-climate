@@ -17,6 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Google Cloud credentials
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-service-key.json"
+
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
@@ -26,10 +30,8 @@ jobs:
 
       - name: Activate Service Account
         run: |
-          gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+          gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
           gcloud config set account $(gcloud config get-value core/account)
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
       - name: Configure Docker for Google Artifact Registry
         run: |
