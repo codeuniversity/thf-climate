@@ -1,0 +1,68 @@
+name: Auto Deploy to Google Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+      IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Decode and Write the Service Account Key to a file properly
+      - name: Set up Google Cloud credentials
+        run: |
+          echo "${{ secrets.GCP_SA_KEY_BASE64 }}" | base64 --decode > ${HOME}/gcloud-service-key.json
+
+      # Step 3: Set up Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      # Step 4: Activate Service Account Explicitly
+      - name: Activate Service Account
+        run: |
+          gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          gcloud config set account $(gcloud config get-value core/account)
+
+      # Step 5: Configure Docker for Google Artifact Registry
+      - name: Configure Docker for Google Artifact Registry
+        run: |
+          gcloud auth configure-docker europe-west3-docker.pkg.dev
+
+      # Step 6: Docker Login using Access Token
+      - name: Build Docker image
+        working-directory: ./backend
+        run: |
+          docker buildx build --platform linux/amd64 -t $IMAGE_NAME:latest .
+
+      # Step 7: Build Docker image
+      - name: Push Docker image to Artifact Registry
+        working-directory: ./backend
+        run: |
+          docker push $IMAGE_NAME:latest
+
+      # Step 8: Push Docker image to Google Artifact Registry
+      - name: Deploy to Cloud Run
+        working-directory: ./backend
+        run: |
+          gcloud run deploy thf-climate-run \
+            --image=$IMAGE_NAME:latest \
+            --port=8000 \
+            --region=europe-west3 \
+            --allow-unauthenticated \
+            --platform=managed \
+            --min-instances=1 \
+            --max-instances=5
