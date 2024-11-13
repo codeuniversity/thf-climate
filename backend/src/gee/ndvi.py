@@ -53,9 +53,10 @@ def get_ndvi_info(
     ).getInfo()
 
     if len(timestamp_list) != len(index_value_list):
-        print(f"Timestamps: {len(timestamp_list)}, Values: {len(index_value_list)}")
         raise ValueError(
-            "The lists of gee indexing values and timestamps do not have the same size"
+            "The lists of gee indexing values and timestamps do not have the same size" +
+            f"Timestamps: {len(timestamp_list)}, Values: {len(index_value_list)}"
+
         )
 
     # Convert the results to a list of dictionaries
