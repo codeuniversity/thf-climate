@@ -1,8 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
-
 from src.constants import (
     AggregationMethod,
     LocationName,
@@ -36,8 +35,8 @@ async def get_temperature_data(
 
     validate_timestamp_start_date_before_end_date(startDate, endDate)
     validate_timestamp_in_range_of_S2_imagery(startDate, endDate)
-    start_date_dt = datetime.utcfromtimestamp(startDate)
-    end_date_dt = datetime.utcfromtimestamp(endDate)
+    start_date_dt = datetime.fromtimestamp(startDate, tz=timezone.utc)
+    end_date_dt = datetime.fromtimestamp(endDate, tz=timezone.utc)
 
     rounded_start_date, rounded_end_date = get_optimistic_rounding(
         start_date_dt, end_date_dt, temporalResolution
@@ -63,5 +62,4 @@ async def get_temperature_data(
         "data": data,
     }
 
-    print(response)
     return JSONResponse(content=response)
