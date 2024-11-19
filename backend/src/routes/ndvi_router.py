@@ -1,8 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
-
 from src.constants import (
     AggregationMethod,
     LocationName,
@@ -13,7 +12,7 @@ from src.service import ndvi_service
 from src.utils.temporal import get_optimistic_rounding
 from src.validation.models import NDVIResponse
 from src.validation.utils import (
-    validate_timestamp_in_range,
+    validate_timestamp_in_range_of_S2_imagery,
     validate_timestamp_start_date_before_end_date,
 )
 
@@ -22,20 +21,22 @@ ndvi_router = APIRouter()
 
 @ndvi_router.get("/ndvi", response_model=NDVIResponse)
 async def get_temperature_data(
-    startDate: int = Query(..., description="Start date as UNIX timestamp in seconds"),
-    endDate: int = Query(..., description="End date as UNIX timestamp in seconds"),
+    startDate: int = Query(...,
+                           description="Start date as UNIX timestamp in seconds"),
+    endDate: int = Query(...,
+                         description="End date as UNIX timestamp in seconds"),
     location: LocationName = Query(..., description="Location name"),
     temporalResolution: TemporalResolution = Query(
         ..., description="Temporal resolution"
     ),
-    aggregation: AggregationMethod = Query(..., description="Aggregation method"),
+    aggregation: AggregationMethod = Query(...,
+                                           description="Aggregation method"),
 ):
-    validate_timestamp_in_range(startDate)
-    validate_timestamp_in_range(endDate)
-    validate_timestamp_start_date_before_end_date(startDate, endDate)
 
-    start_date_dt = datetime.utcfromtimestamp(startDate)
-    end_date_dt = datetime.utcfromtimestamp(endDate)
+    validate_timestamp_start_date_before_end_date(startDate, endDate)
+    validate_timestamp_in_range_of_S2_imagery(startDate, endDate)
+    start_date_dt = datetime.fromtimestamp(startDate, tz=timezone.utc)
+    end_date_dt = datetime.fromtimestamp(endDate, tz=timezone.utc)
 
     rounded_start_date, rounded_end_date = get_optimistic_rounding(
         start_date_dt, end_date_dt, temporalResolution
@@ -61,5 +62,4 @@ async def get_temperature_data(
         "data": data,
     }
 
-    print(response)
     return JSONResponse(content=response)
