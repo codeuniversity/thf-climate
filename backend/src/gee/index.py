@@ -19,9 +19,12 @@ def get_preprocessed_imagery(
     image_collection = get_imagery(aoi, start_date, end_date)
 
     # Preprocess the imagery
+    image_collection = image_collection.select(
+        "SCL", "B8", "B4")  # Removing unused bands
     mosaicked_collection = get_mosaicked_by_date_collection(image_collection)
     clipped_collection = mosaicked_collection.map(lambda img: img.clip(aoi))
-    cloud_masked_collection = clipped_collection.map(lambda img: get_cloud_masked(img))
+    cloud_masked_collection = clipped_collection.map(
+        lambda img: get_cloud_masked(img))
 
     return cloud_masked_collection
 
