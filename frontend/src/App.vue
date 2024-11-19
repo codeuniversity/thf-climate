@@ -1,19 +1,18 @@
 <template>
   <h1 id="app">
-    <TestComponent />
-    <MedianTempGraph />
+    <NdviGraph />
   </h1>
 </template>
 
 <script>
-  import TestComponent from "./components/TestComponent.vue"
-  // import MedianTempGraph from "./components/TestGraphOne.vue"
+  import NdviGraph from "./components/NdviGraph.vue"
+  import MedianTempGraph from "./components/TestGraphOne.vue"
 
   export default {
     name: 'App',
     components: {
-      TestComponent,
-      // MedianTempGraph
+      NdviGraph,
+      MedianTempGraph
     }
   };
 </script>
