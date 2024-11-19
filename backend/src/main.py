@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.routes.ndvi_router import ndvi_router
+from backend.src.routes.sat_index_router import sat_index_router
 
 from .weather.router import router as weather_router
 
@@ -23,4 +23,4 @@ def read_root():
 
 
 app.include_router(weather_router, prefix="/weather", tags=["Weather Data"])
-app.include_router(ndvi_router, prefix="/index", tags=["NDVI Data"])
+app.include_router(sat_index_router, prefix="/index", tags=["NDVI Data"])

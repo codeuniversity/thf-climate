@@ -34,3 +34,10 @@ class NDVIMetaResponse(BaseMeta):
 class NDVIResponse(BaseMeta):
     meta: NDVIMetaResponse
     data: List[DataPoint]
+
+class MSAVIMetaResponse(BaseMeta):
+    unit: Unit = Unit.DIMENSIONLESS
+
+class MSAVIResponse(BaseMeta):
+    meta: MSAVIMetaResponse
+    data: List[DataPoint]
