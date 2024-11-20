@@ -4,7 +4,7 @@ import pandas as pd
 
 from src.constants import AggregationMethod, LocationPolygon, TemporalResolution
 from src.gee.image_preprocessing import get_preprocessed_imagery
-from src.gee.sat_index_info import get_ndvi_info
+from src.gee.sat_index_info import get_sat_index_info
 from src.gee.ndvi_cache import ndvi_daily_cache
 from typing import List, Dict, Union
 import math
@@ -138,7 +138,7 @@ def ndvi_service(
             processing_start_date,
             processing_end_date,
         )
-        NDVI_time_series = get_ndvi_info(
+        NDVI_time_series = get_sat_index_info(
             masked_images, LocationPolygon[location.value].value
         )
 
