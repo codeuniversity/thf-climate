@@ -20,14 +20,17 @@ from src.validation.utils import (
 async def sat_index_controller(
     sat_index_type: IndexType, 
     startDate: int = Query(...,
+                          
                            description="Start date as UNIX timestamp in seconds"),
     endDate: int = Query(...,
+                        
                          description="End date as UNIX timestamp in seconds"),
     location: LocationName = Query(..., description="Location name"),
     temporalResolution: TemporalResolution = Query(
         ..., description="Temporal resolution"
     ),
     aggregation: AggregationMethod = Query(...,
+                                          
                                            description="Aggregation method"),
 ):
 

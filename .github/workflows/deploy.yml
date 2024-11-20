@@ -11,7 +11,8 @@ jobs:
 
     env:
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-      IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate
+      BACKEND_IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate
+      FRONTEND_IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate-frontend/thf-climate-frontend
 
     steps:
       # Step 1: Checkout the code
@@ -42,25 +43,42 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west3-docker.pkg.dev
 
-      # Step 6: Docker Login using Access Token
-      - name: Build Docker image
+      # Step 6: Build and Deploy the backend
+      - name: Build Docker image (backend)
         working-directory: ./backend
         run: |
-          docker buildx build --platform linux/amd64 -t $IMAGE_NAME:latest .
-
-      # Step 7: Build Docker image
-      - name: Push Docker image to Artifact Registry
+          docker buildx build --platform linux/amd64 -t $BACKEND_IMAGE_NAME:latest .
+      - name: Push Docker image to Artifact Registry (backend)
         working-directory: ./backend
         run: |
-          docker push $IMAGE_NAME:latest
-
-      # Step 8: Push Docker image to Google Artifact Registry
-      - name: Deploy to Cloud Run
+          docker push $BACKEND_IMAGE_NAME:latest
+      - name: Deploy to Cloud Run (backend)
         working-directory: ./backend
         run: |
           gcloud run deploy thf-climate-run \
-            --image=$IMAGE_NAME:latest \
+            --image=$BACKEND_IMAGE_NAME:latest \
             --port=8000 \
+            --region=europe-west3 \
+            --allow-unauthenticated \
+            --platform=managed \
+            --min-instances=1 \
+            --max-instances=5
+
+      # Step 7: Build and Deploy the frontend
+      - name: Build Docker image (frontend)
+        working-directory: ./frontend
+        run: |
+          docker buildx build --platform linux/amd64 -t $FRONTEND_IMAGE_NAME:latest .
+      - name: Push Docker image to Artifact Registry (frontend)
+        working-directory: ./frontend
+        run: |
+          docker push $FRONTEND_IMAGE_NAME:latest
+      - name: Deploy to Cloud Run (frontend)
+        working-directory: ./frontend
+        run: |
+          gcloud run deploy thf-climate-frontend-run \
+            --image=$FRONTEND_IMAGE_NAME:latest \
+            --port=80 \
             --region=europe-west3 \
             --allow-unauthenticated \
             --platform=managed \
