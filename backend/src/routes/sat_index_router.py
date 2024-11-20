@@ -7,8 +7,9 @@ from src.constants import (
     LocationName,
     TemporalResolution,
     Unit,
+    IndexType
 )
-from src.service import ndvi_service
+from src.service import sat_index_service
 from src.utils.temporal import get_optimistic_rounding
 from src.validation.models import NDVIResponse, MSAVIResponse
 from src.validation.utils import (
@@ -42,12 +43,13 @@ async def get_ndvi_data(
         start_date_dt, end_date_dt, temporalResolution
     )
 
-    data = ndvi_service(
+    data = sat_index_service(
         location=location,
         temporal_resolution=temporalResolution,
         aggregation_method=aggregation,
         start_date=rounded_start_date,
         end_date=rounded_end_date,
+        index_type=IndexType.NDVI
     )
 
     response = {
@@ -87,12 +89,13 @@ async def get_msavi_data(
         start_date_dt, end_date_dt, temporalResolution
     )
 
-    data = ndvi_service(
+    data = sat_index_service(
         location=location,
         temporal_resolution=temporalResolution,
         aggregation_method=aggregation,
         start_date=rounded_start_date,
         end_date=rounded_end_date,
+        index_type=IndexType.MSAVI
     )
 
     response = {

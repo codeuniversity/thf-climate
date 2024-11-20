@@ -2,7 +2,7 @@ from datetime import datetime, timezone, timedelta
 
 import pandas as pd
 
-from src.constants import AggregationMethod, LocationPolygon, TemporalResolution
+from src.constants import AggregationMethod, LocationPolygon, TemporalResolution, IndexType
 from src.gee.image_preprocessing import get_preprocessed_imagery
 from src.gee.sat_index_info import get_sat_index_info
 from src.gee.ndvi_cache import ndvi_daily_cache
@@ -103,12 +103,13 @@ def fill_missing_dates(
     return df
 
 
-def ndvi_service(
+def sat_index_service(
     location: LocationPolygon,
     temporal_resolution: TemporalResolution,
     aggregation_method: AggregationMethod,
     start_date: datetime,
     end_date: datetime,
+    index_type: IndexType
 ):
     # Temporary implementation of GEE Caching strategy
     current_cache_end_date = datetime(
@@ -139,7 +140,7 @@ def ndvi_service(
             processing_end_date,
         )
         NDVI_time_series = get_sat_index_info(
-            masked_images, LocationPolygon[location.value].value
+            masked_images, LocationPolygon[location.value].value, index_type
         )
 
     if cache_start_date:

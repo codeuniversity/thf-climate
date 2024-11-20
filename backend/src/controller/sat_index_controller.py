@@ -9,7 +9,7 @@ from src.constants import (
     TemporalResolution,
     Unit,
 )
-from src.service import ndvi_service
+from src.service import sat_index_service
 from src.utils.temporal import get_optimistic_rounding
 from src.validation.utils import (
     validate_timestamp_in_range_of_S2_imagery,
@@ -43,7 +43,7 @@ async def sat_index_controller(
         start_date_dt, end_date_dt, temporalResolution
     )
 
-    data = ndvi_service(
+    data = sat_index_service(
         location=location,
         temporal_resolution=temporalResolution,
         aggregation_method=aggregation,

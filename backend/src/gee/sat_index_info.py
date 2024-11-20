@@ -47,10 +47,9 @@ def calculate_start_of_day_timestamp_GEE_SERVER(image: ee.Image):
 
 
 def get_sat_index_info(
-    image_collection: ee.ImageCollection, coordinates: ee.Geometry.Polygon
+    image_collection: ee.ImageCollection, coordinates: ee.Geometry.Polygon, index_type: IndexType
 ):
     aoi = ee.Geometry.Polygon(coordinates)
-    index_type = IndexType.MSAVI  # TODO: Refactor this into a parameter
 
     # Setting indexing values Server side
     image_collection_with_index = image_collection.map(

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.src.routes.sat_index_router import sat_index_router
+from src.routes.sat_index_router import sat_index_router
 
 from .weather.router import router as weather_router
 
