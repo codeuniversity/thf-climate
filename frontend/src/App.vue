@@ -1,6 +1,6 @@
 <template>
   <h1 id="app">
-    <NdviGraph />
+    <NdviComparisonGraph />
     <MedianTempGraph />
     <MeanSoilTempGraph />
     <MeanSoilMoistureGraph />
@@ -10,8 +10,8 @@
 </template>
 
 <script>
-  import NdviGraph from "./components/NdviGraph.vue"
-  import MedianTempGraph from "./components/TestGraphOne.vue"
+  import NdviComparisonGraph from "./components/NdviComparisonGraph.vue"
+  import MedianTempGraph from "./components/MedianTempGraph.vue"
   import MeanSoilTempGraph from "./components/SoilTempGraph.vue"
   import MeanSoilMoistureGraph from "./components/SoilMoistureGraph.vue"
   import AugustMeanSoilTempGraph from "./components/AugustSoilTempGraph.vue"
@@ -20,7 +20,7 @@
   export default {
     name: 'App',
     components: {
-      NdviGraph,
+      NdviComparisonGraph,
       MedianTempGraph,
       MeanSoilTempGraph,
       MeanSoilMoistureGraph,
