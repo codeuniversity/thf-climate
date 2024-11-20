@@ -4,7 +4,7 @@ import pandas as pd
 
 from src.constants import AggregationMethod, LocationPolygon, TemporalResolution
 from src.gee.image_preprocessing import get_preprocessed_imagery
-from src.gee.ndvi import get_ndvi_info
+from src.gee.sat_index_info import get_ndvi_info
 from src.gee.ndvi_cache import ndvi_daily_cache
 from typing import List, Dict, Union
 import math
