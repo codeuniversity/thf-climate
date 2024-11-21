@@ -1,5 +1,5 @@
 import ee
-from constants import IndexType
+from ..constants import IndexType
 
 INDEX_FEATURE_LABEL = "indexing_value"
 TIMESTAMP_FEATURE_LABEL = "start_of_day_timestamp"
