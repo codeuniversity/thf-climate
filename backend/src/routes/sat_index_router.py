@@ -118,7 +118,7 @@ async def get_msavi_data(
             "endDate": int(rounded_end_date.timestamp()),
             "temporalResolution": TemporalResolution[temporalResolution].value,
             "aggregation": AggregationMethod[aggregation].value,
-            "unit": Unit.NORMALIZED_DIFFERENCE.value,
+            "unit": Unit.DIMENSIONLESS.value,
         },
         "data": data,
     }
