@@ -17,10 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
 app.include_router(weather_router, prefix="/weather", tags=["Weather Data"])
-app.include_router(sat_index_router, prefix="/index", tags=["NDVI Data"])
+app.include_router(sat_index_router, prefix="/index", tags=["Vegetation Indices"])

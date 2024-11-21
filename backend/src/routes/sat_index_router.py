@@ -7,7 +7,7 @@ from src.constants import (
     LocationName,
     TemporalResolution,
     Unit,
-    IndexType
+    IndexType,
 )
 from src.service import sat_index_service
 from src.utils.temporal import get_optimistic_rounding
@@ -22,18 +22,24 @@ sat_index_router = APIRouter()
 
 @sat_index_router.get("/ndvi", response_model=NDVIResponse)
 async def get_ndvi_data(
-    startDate: int = Query(...,
-                           description="Start date as UNIX timestamp in seconds"),
-    endDate: int = Query(...,
-                         description="End date as UNIX timestamp in seconds"),
-    location: LocationName = Query(..., description="Location name"),
-    temporalResolution: TemporalResolution = Query(
-        ..., description="Temporal resolution"
+    startDate: int = Query(
+        ...,
+        description="First date of requested date range in UNIX timestamp as seconds",
     ),
-    aggregation: AggregationMethod = Query(...,
-                                           description="Aggregation method"),
+    endDate: int = Query(
+        ...,
+        description="Last date of requested date range in UNIX timestamp as seconds",
+    ),
+    location: LocationName = Query(..., description="Name of the requested location"),
+    temporalResolution: TemporalResolution = Query(
+        ...,
+        description="Time interval that a single data point should represent e.g. one month",
+    ),
+    aggregation: AggregationMethod = Query(
+        ...,
+        description="Method of aggregating available data into a single datapoint to represent the selected time interval e.g. mean average",
+    ),
 ):
-
     validate_timestamp_start_date_before_end_date(startDate, endDate)
     validate_timestamp_in_range_of_S2_imagery(startDate, endDate)
     start_date_dt = datetime.fromtimestamp(startDate, tz=timezone.utc)
@@ -49,7 +55,7 @@ async def get_ndvi_data(
         aggregation_method=aggregation,
         start_date=rounded_start_date,
         end_date=rounded_end_date,
-        index_type=IndexType.NDVI
+        index_type=IndexType.NDVI,
     )
 
     response = {
@@ -66,20 +72,27 @@ async def get_ndvi_data(
 
     return JSONResponse(content=response)
 
+
 @sat_index_router.get("/msavi", response_model=MSAVIResponse)
 async def get_msavi_data(
-    startDate: int = Query(...,
-                           description="Start date as UNIX timestamp in seconds"),
-    endDate: int = Query(...,
-                         description="End date as UNIX timestamp in seconds"),
-    location: LocationName = Query(..., description="Location name"),
-    temporalResolution: TemporalResolution = Query(
-        ..., description="Temporal resolution"
+    startDate: int = Query(
+        ...,
+        description="First date of requested date range in UNIX timestamp as seconds",
     ),
-    aggregation: AggregationMethod = Query(...,
-                                           description="Aggregation method"),
+    endDate: int = Query(
+        ...,
+        description="Last date of requested date range in UNIX timestamp as seconds",
+    ),
+    location: LocationName = Query(..., description="Name of the requested location"),
+    temporalResolution: TemporalResolution = Query(
+        ...,
+        description="Time interval that a single data point should represent e.g. one month",
+    ),
+    aggregation: AggregationMethod = Query(
+        ...,
+        description="Method of aggregating available data into a single datapoint to represent the selected time interval e.g. mean average",
+    ),
 ):
-
     validate_timestamp_start_date_before_end_date(startDate, endDate)
     validate_timestamp_in_range_of_S2_imagery(startDate, endDate)
     start_date_dt = datetime.fromtimestamp(startDate, tz=timezone.utc)
@@ -95,7 +108,7 @@ async def get_msavi_data(
         aggregation_method=aggregation,
         start_date=rounded_start_date,
         end_date=rounded_end_date,
-        index_type=IndexType.MSAVI
+        index_type=IndexType.MSAVI,
     )
 
     response = {
