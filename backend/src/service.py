@@ -10,7 +10,7 @@ from src.constants import (
 )
 from src.gee.image_preprocessing import get_preprocessed_imagery
 from src.gee.sat_index_info import get_sat_index_info
-from src.gee.ndvi_cache import ndvi_daily_cache
+from src.cache.ndvi_cache import ndvi_daily_cache
 from typing import List, Dict, Union
 import math
 
