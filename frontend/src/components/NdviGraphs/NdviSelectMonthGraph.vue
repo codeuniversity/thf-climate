@@ -16,8 +16,7 @@
     <v-row>
       <div 
         id="plotlyGraphNdviMonthly" 
-        v-show="ndviData"
-        style="width: 100%"
+        style="width: 100%; height: 400px"
         class="d-flex justify-center"
       ></div>
     </v-row>
@@ -25,7 +24,7 @@
 </template>
 
 <script>
-import { ref, nextTick, watch, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import axios from 'axios'
 import Plotly from 'plotly.js-dist-min'
 
@@ -33,14 +32,14 @@ export default {
   name: 'NdviSelectMonthGraph',
   setup() {
     const ndviData = ref(null)
-    const month = ref("August")
+    const month = ref("January")
     const monthOptions = [
       "January", "February", "March", "April",
       "May", "June", "July", "August",
       "September", "October", "November", "December"
     ]
     const startDate = ref(1514761200) // 2018-01-01
-      const endDate = ref(1704063599) // 2023-12-31
+    const endDate = ref(1704063599) // 2023-12-31
 
     const fetchNdviData = async () => {
       const apiUrl = 'http://localhost:8000/index/ndvi'
@@ -55,7 +54,6 @@ export default {
           }
         })
         ndviData.value = response.data
-        await nextTick()
         renderPlot()
       } catch (error) {
         console.error("Error fetching NDVI data:", error)
@@ -89,15 +87,11 @@ export default {
       }
     }
 
-    const updateGraph = () => {
-      if (ndviData.value) {
-        renderPlot()
-      }
-    }
+    watch(month, renderPlot)
 
-    watch(month, updateGraph)
-
-    onMounted(fetchNdviData)
+    onMounted(() => {
+      fetchNdviData()
+    })
 
     return {
       ndviData,

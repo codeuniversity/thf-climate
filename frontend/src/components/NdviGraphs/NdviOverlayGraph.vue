@@ -1,11 +1,10 @@
 <template>
     <v-container>
-      <h2 class="pb-10">NDVI Year Overlay (2018-2023)</h2>
+      <h2 class="pb-4">NDVI Year Overlay (2018-2023)</h2>
       <v-row>
         <div 
           id="plotlyGraphNdviOverlay" 
-          v-show="ndviData"
-          style="width: 100%"
+          style="width: 100%; height: 400px"
           class="d-flex justify-center"
         ></div>
       </v-row>
@@ -13,7 +12,7 @@
   </template>
   
   <script>
-  import { ref, nextTick, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import Plotly from 'plotly.js-dist-min'
   
@@ -30,7 +29,6 @@
         try {
           const response = await axios.get(apiUrl, { params })
           ndviData.value = response.data
-          await nextTick()
           renderPlot()
         } catch (error) {
           console.error("Error fetching NDVI data:", error)
@@ -83,7 +81,7 @@
   
       return {
         ndviData,
-        years,
+        years
       }
     }
   }
