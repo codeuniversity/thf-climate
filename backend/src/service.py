@@ -11,7 +11,9 @@ from src.constants import (
 from src.gee.image_preprocessing import get_preprocessed_imagery
 from src.gee.sat_index_info import get_sat_index_info
 from src.cache.ndvi_cache import ndvi_daily_cache
+from src.cache.msavi_cache import msavi_daily_cache
 from typing import List, Dict, Union
+from fastapi import HTTPException
 import math
 
 
@@ -136,7 +138,9 @@ def sat_index_service(
     elif start_date < current_cache_end_date and end_date > current_cache_end_date:
         cache_start_date = start_date
         cache_end_date = current_cache_end_date
-        processing_start_date = current_cache_end_date + timedelta(days=1)
+        processing_start_date = (
+            current_cache_end_date + timedelta(days=1)
+        )  # WARNING: this can cause an empty range request to GEE, TODO: fix empty range case
         processing_end_date = end_date
 
     # Entire range is outside the cache,
@@ -149,28 +153,34 @@ def sat_index_service(
 
     # Get and process uncached range
     if processing_start_date:
-        print(f'Getting {processing_start_date.date()} to {processing_end_date.date()} from GEE.')
+        print(
+            f"Getting {processing_start_date.date()} to {processing_end_date.date()} from GEE."
+        )
         masked_images = get_preprocessed_imagery(
             LocationPolygon[location.value].value,
             processing_start_date,
             processing_end_date,
         )
-        NDVI_time_series = get_sat_index_info(
+        sat_index_time_series = get_sat_index_info(
             masked_images, LocationPolygon[location.value].value, index_type
         )
 
     # Get cached range
     if cache_start_date:
-        print(f'Getting {cache_start_date.date()} to {cache_end_date.date()} from cache.')
-        cached_data_subset = get_cache_subset(cache_start_date, cache_end_date)
+        print(
+            f"Getting {cache_start_date.date()} to {cache_end_date.date()} from cache."
+        )
+        cached_data_subset = get_cache_subset(
+            cache_start_date, cache_end_date, index_type
+        )
 
     if processing_start_date and cache_start_date:
-        ndvi_data = cached_data_subset + NDVI_time_series
+        index_data = cached_data_subset + sat_index_time_series
     else:
-        ndvi_data = cached_data_subset if cache_start_date else NDVI_time_series
+        index_data = cached_data_subset if cache_start_date else sat_index_time_series
 
     index_df = initialize_time_series(
-        ndvi_data, temporal_resolution, aggregation_method
+        index_data, temporal_resolution, aggregation_method
     )
 
     filled_df = fill_missing_dates(index_df, start_date, end_date, temporal_resolution)
@@ -178,9 +188,22 @@ def sat_index_service(
     return convert_df_to_list(filled_df)
 
 
-def get_cache_subset(start_date: datetime, end_date: datetime):
+def get_cache_subset(start_date: datetime, end_date: datetime, index_type: IndexType):
+    match index_type:
+        case IndexType.NDVI:
+            cache = ndvi_daily_cache
+        case IndexType.MSAVI:
+            cache = msavi_daily_cache
+        case _:
+            cache = None
+
+    if cache is None:
+        raise HTTPException(
+            status_code=404, detail="Cache not found for requested index type."
+        )
+
     subset: list[dict] = []
-    for entry in ndvi_daily_cache:
+    for entry in cache:
         if entry["timestamp"] >= int(start_date.timestamp()) and entry[
             "timestamp"
         ] <= int(end_date.timestamp()):
