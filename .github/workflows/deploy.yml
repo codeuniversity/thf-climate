@@ -48,7 +48,7 @@ jobs:
         working-directory: ./backend
         run: |
           docker buildx build --platform linux/amd64 -t $BACKEND_IMAGE_NAME:latest .
-          docker run -d -p 8000:8000 --name $BACKEND_IMAGE_NAME $BACKEND_IMAGE_NAME
+          docker run -d -p 8000:8000 --name thf-climate-backend $BACKEND_IMAGE_NAME
       - name: Wait for the application to start
         run: |
           timeout 30 bash -c 'until curl -s http://127.0.0.1:8000/; do sleep 1; done'
