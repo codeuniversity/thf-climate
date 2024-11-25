@@ -50,14 +50,19 @@ jobs:
           docker buildx build --platform linux/amd64 -t $BACKEND_IMAGE_NAME:latest .
           docker run -d -p 8000:8000 --name thf-climate-backend $BACKEND_IMAGE_NAME
       - name: Wait for the application to start
+        working-directory: ./backend
         run: |
           timeout 30 bash -c 'until curl -s http://127.0.0.1:8000/; do sleep 1; done'
 
       # Step 7: Run the tests against the local application
-      - name: Run tests
+      - name: Install dependencies and Run tests (backend)
+        working-directory: ./backend
         env:
           API_BASE_URL: "http://127.0.0.1:8000"
-        run: pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pytest
 
       # Step 8: Push and Deploy the backend on Google cloud
       - name: Push Docker image to Artifact Registry (backend)
