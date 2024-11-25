@@ -43,11 +43,27 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west3-docker.pkg.dev
 
-      # Step 6: Build and Deploy the backend
+      # Step 6: Build and the run the backend
       - name: Build Docker image (backend)
         working-directory: ./backend
         run: |
           docker buildx build --platform linux/amd64 -t $BACKEND_IMAGE_NAME:latest .
+      - name: Run the application
+        run: |
+          uvicorn backend.main:app --host 0.0.0.0 --port 8000 &
+        env:
+          PORT: 8000
+      - name: Wait for the application to start
+        run: |
+          timeout 30 bash -c 'until curl -s http://127.0.0.1:8000/; do sleep 1; done'
+
+      # Step 7: Run the tests against the local application
+      - name: Run tests
+        env:
+          API_BASE_URL: "http://127.0.0.1:8000"
+        run: pytest
+
+      # Step 8: Push and Deploy the backend on Google cloud
       - name: Push Docker image to Artifact Registry (backend)
         working-directory: ./backend
         run: |
@@ -64,7 +80,7 @@ jobs:
             --min-instances=1 \
             --max-instances=5
 
-      # Step 7: Build and Deploy the frontend
+      # Step 9: Build and Deploy the frontend
       - name: Build Docker image (frontend)
         working-directory: ./frontend
         run: |
