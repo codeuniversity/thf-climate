@@ -3,8 +3,6 @@ import requests
 
 
 def test_api_response():
-    # url = os.getenv("API_URL")#"https://thf-climate-run-1020174331409.europe-west3.run.app"
-
     # Make a GET request to the API
     response = requests.get(os.getenv("API_BASE_URL"))
 
