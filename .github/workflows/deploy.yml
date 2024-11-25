@@ -3,7 +3,7 @@ name: Auto Deploy to Google Cloud
 on:
   push:
     branches:
-      - feature/custom-testing-base-url
+      - main
 
 jobs:
   deploy:
