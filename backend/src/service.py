@@ -122,12 +122,12 @@ def sat_index_service(
 ):
     # Temporary implementation of GEE Caching strategy
     current_cache_end_date = datetime(
-        2024, 9, 29, tzinfo=timezone.utc
+        2024, 9, 29, 23, 59, 59, tzinfo=timezone.utc
     )  # current end of cache
 
     # Entire range is within the cache,
     # get entire range from cache, process nothing.
-    if start_date < current_cache_end_date and end_date < current_cache_end_date:
+    if start_date < current_cache_end_date and end_date <= current_cache_end_date:
         cache_start_date = start_date
         cache_end_date = end_date
         processing_start_date = None
@@ -135,12 +135,12 @@ def sat_index_service(
 
     # Partial overlap with the cache,
     # get cached part from cache, process the rest until end of range.
-    elif start_date < current_cache_end_date and end_date > current_cache_end_date:
+    elif start_date <= current_cache_end_date and end_date > current_cache_end_date:
         cache_start_date = start_date
         cache_end_date = current_cache_end_date
         processing_start_date = (
-            current_cache_end_date + timedelta(days=1)
-        )  # WARNING: this can cause an empty range request to GEE, TODO: fix empty range case
+            current_cache_end_date + timedelta(seconds=1)
+        )
         processing_end_date = end_date
 
     # Entire range is outside the cache,
@@ -151,6 +151,11 @@ def sat_index_service(
         processing_start_date = start_date
         processing_end_date = end_date
 
+    else:
+        raise HTTPException(
+        status_code=422, 
+        detail="Unprocessable input: Input value is not supported."
+    )
     # Get and process uncached range
     if processing_start_date:
         print(
