@@ -3,7 +3,7 @@ name: Auto Deploy to Google Cloud
 on:
   push:
     branches:
-      - main
+      - feature/custom-testing-base-url
 
 jobs:
   deploy:
@@ -19,9 +19,7 @@ jobs:
       FRONTEND_IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate-frontend/thf-climate-frontend
 
     steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Step 2: Decode and Write the Service Account Key to a file properly
       - name: Set up Google Cloud credentials
