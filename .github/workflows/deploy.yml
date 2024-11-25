@@ -44,11 +44,11 @@ jobs:
           gcloud auth configure-docker europe-west3-docker.pkg.dev
 
       # Step 6: Build and the run the backend
-      - name: Build Docker image (backend)
+      - name: Build and Run the Docker image (backend)
         working-directory: ./backend
         run: |
           docker buildx build --platform linux/amd64 -t $BACKEND_IMAGE_NAME:latest .
-          docker run -d -p 8000:8000
+          docker run -d -p 8000:8000 --name $BACKEND_IMAGE_NAME $BACKEND_IMAGE_NAME
       - name: Wait for the application to start
         run: |
           timeout 30 bash -c 'until curl -s http://127.0.0.1:8000/; do sleep 1; done'
