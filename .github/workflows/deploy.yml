@@ -3,13 +3,17 @@ name: Auto Deploy to Google Cloud
 on:
   push:
     branches:
-      - feature/custom-testing-base-url
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     env:
+      GOOGLE_PROJECT_ID: ${{ vars.GOOGLE_PROJECT_ID }}
+      GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS: ${{ secrets.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS }}
+      GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL }}
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
       BACKEND_IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate
       FRONTEND_IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate-frontend/thf-climate-frontend
@@ -58,7 +62,7 @@ jobs:
       - name: Install dependencies and Run tests (backend)
         working-directory: ./backend
         env:
-          API_BASE_URL: "http://127.0.0.11:8000"
+          API_BASE_URL: "http://127.0.0.1:8000"
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
