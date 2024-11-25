@@ -58,7 +58,7 @@ jobs:
       - name: Install dependencies and Run tests (backend)
         working-directory: ./backend
         env:
-          API_BASE_URL: "http://127.0.0.1:8000"
+          API_BASE_URL: "http://127.0.0.11:8000"
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
