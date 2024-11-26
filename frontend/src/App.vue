@@ -1,37 +1,25 @@
 <template>
   <h1 id="app">
-    <NdviComparisonGraph />
-    <NdviSelectMonthGraph />
-    <NdviOverlayGraph />
-    <MedianTempGraph />
-    <MeanSoilTempGraph />
-    <MeanSoilMoistureGraph />
-    <AugustMeanSoilTempGraph />
-    <SelectMonthMeanSoilTempGraph />
+    <Header />
+    <IntroSection />
+    <MainSection />
+    <Footer />
   </h1>
 </template>
 
 <script>
-  import NdviComparisonGraph from "./components/NdviGraphs/NdviComparisonGraph.vue"
-  import NdviSelectMonthGraph from "./components/NdviGraphs/NdviSelectMonthGraph.vue"
-  import NdviOverlayGraph from "./components/NdviGraphs/NdviOverlayGraph.vue"
-  import MedianTempGraph from "./components/MedianTempGraph.vue"
-  import MeanSoilTempGraph from "./components/SoilTempGraph.vue"
-  import MeanSoilMoistureGraph from "./components/SoilMoistureGraph.vue"
-  import AugustMeanSoilTempGraph from "./components/AugustSoilTempGraph.vue"
-  import SelectMonthMeanSoilTempGraph from "./components/SelectMonthSoilTempGraph.vue"
+  import Header from "./components/Header.vue"
+  import IntroSection from "./components/IntroSection.vue"
+  import MainSection from "./components/MainSection.vue"
+  import Footer from "./components/Footer.vue"
 
   export default {
     name: 'App',
     components: {
-      NdviComparisonGraph,
-      NdviSelectMonthGraph,
-      NdviOverlayGraph,
-      MedianTempGraph,
-      MeanSoilTempGraph,
-      MeanSoilMoistureGraph,
-      AugustMeanSoilTempGraph,
-      SelectMonthMeanSoilTempGraph
+      Header,
+      IntroSection,
+      MainSection,
+      Footer
     }
   }
 </script>
