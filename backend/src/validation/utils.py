@@ -26,3 +26,17 @@ def validate_timestamp_start_date_before_end_date(startDate, endDate):
         raise HTTPException(
             status_code=400, detail="endDate must be after startDate")
     return endDate
+
+
+def validate_temperature_timestamp_in_range(start, end):
+    min_timestamp = -946771200  # 01/01/1940
+    max_timestamp = int(time.time()) # now
+    print(end)
+    print(max_timestamp)
+    if (start < min_timestamp or end > max_timestamp):
+        raise HTTPException(
+            status_code=400, detail=f"Timestamp must be between {min_timestamp} and {max_timestamp}")
+    elif end <= start:
+        raise HTTPException(
+            status_code=400, detail="endDate must be after startDate")
+    return end

@@ -1,33 +1,27 @@
 <template>
   <h1 id="app">
-    <TestComponent />
-    <MedianTempGraph />
-    <MeanSoilTempGraph />
-    <MeanSoilMoistureGraph />
-    <AugustMeanSoilTempGraph />
-    <SelectMonthMeanSoilTempGraph />
+    <Header />
+    <IntroSection />
+    <MainSection />
+    <Footer />
   </h1>
 </template>
 
 <script>
-  import TestComponent from "./components/TestComponent.vue"
-  import MedianTempGraph from "./components/TestGraphOne.vue"
-  import MeanSoilTempGraph from "./components/SoilTempGraph.vue"
-  import MeanSoilMoistureGraph from "./components/SoilMoistureGraph.vue"
-  import AugustMeanSoilTempGraph from "./components/AugustSoilTempGraph.vue"
-  import SelectMonthMeanSoilTempGraph from "./components/SelectMonthSoilTempGraph.vue"
+  import Header from "./components/Header.vue"
+  import IntroSection from "./components/IntroSection.vue"
+  import MainSection from "./components/MainSection.vue"
+  import Footer from "./components/Footer.vue"
 
   export default {
     name: 'App',
     components: {
-      //TestComponent,
-      MedianTempGraph,
-      MeanSoilTempGraph,
-      MeanSoilMoistureGraph,
-      AugustMeanSoilTempGraph,
-      SelectMonthMeanSoilTempGraph
+      Header,
+      IntroSection,
+      MainSection,
+      Footer
     }
-  };
+  }
 </script>
 
 <style scoped></style>
