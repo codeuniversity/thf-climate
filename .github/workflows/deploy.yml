@@ -10,14 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      GOOGLE_PROJECT_ID: ${{ vars.GOOGLE_PROJECT_ID }}
+      GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS: ${{ secrets.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS }}
+      GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL }}
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
       BACKEND_IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate/thf-climate
       FRONTEND_IMAGE_NAME: europe-west3-docker.pkg.dev/thf-climate-cloud/thf-climate-frontend/thf-climate-frontend
 
     steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Step 2: Decode and Write the Service Account Key to a file properly
       - name: Set up Google Cloud credentials
@@ -43,11 +45,28 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west3-docker.pkg.dev
 
-      # Step 6: Build and Deploy the backend
-      - name: Build Docker image (backend)
+      # Step 6: Build and the run the backend
+      - name: Build and Run the Docker image (backend)
         working-directory: ./backend
         run: |
           docker buildx build --platform linux/amd64 -t $BACKEND_IMAGE_NAME:latest .
+          docker run -d -p 8000:8000 --name thf-climate-backend $BACKEND_IMAGE_NAME
+      - name: Wait for the application to start
+        working-directory: ./backend
+        run: |
+          timeout 30 bash -c 'until curl -s http://127.0.0.1:8000/; do sleep 1; done'
+
+      # Step 7: Run the tests against the local application
+      - name: Install dependencies and Run tests (backend)
+        working-directory: ./backend
+        env:
+          API_BASE_URL: "http://127.0.0.1:8000"
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pytest
+
+      # Step 8: Push and Deploy the backend on Google cloud
       - name: Push Docker image to Artifact Registry (backend)
         working-directory: ./backend
         run: |
@@ -64,7 +83,7 @@ jobs:
             --min-instances=1 \
             --max-instances=5
 
-      # Step 7: Build and Deploy the frontend
+      # Step 9: Build and Deploy the frontend
       - name: Build Docker image (frontend)
         working-directory: ./frontend
         run: |

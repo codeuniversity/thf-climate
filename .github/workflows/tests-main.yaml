@@ -16,15 +16,24 @@ jobs:
       ENVIRONMENT: ${{ vars.ENVIRONMENT }}
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
+
+      # Build and the run the backend docker image
+      - name: Build and Run the Docker image (backend)
         working-directory: ./backend
+        run: |
+          docker buildx build --platform linux/amd64 -t thf-climate-backend .
+          docker run -d -p 8000:8000 --name thf-climate-backend thf-climate-backend
+      - name: Wait for the application to start
+        working-directory: ./backend
+        run: |
+          timeout 30 bash -c 'until curl -s http://127.0.0.1:8000/; do sleep 1; done'
+
+      # Run the tests against the local application
+      - name: Install dependencies and Run tests
+        working-directory: ./backend
+        env:
+          API_BASE_URL: "http://127.0.0.1:8000"
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
-      - name: Run tests
-        working-directory: ./backend
-        run: pytest
+          pytest
