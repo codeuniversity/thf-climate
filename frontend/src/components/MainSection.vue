@@ -1,5 +1,6 @@
 <template>
   <v-container class="main-section" fluid>
+    <Images />
     <NdviComparisonGraph />
     <NdviSelectMonthGraph />
     <NdviOverlayGraph />
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+import Images from "./Images.vue"
 import NdviComparisonGraph from "./NdviGraphs/NdviComparisonGraph.vue"
 import NdviSelectMonthGraph from "./NdviGraphs/NdviSelectMonthGraph.vue"
 import NdviOverlayGraph from "./NdviGraphs/NdviOverlayGraph.vue"
@@ -24,6 +26,7 @@ import SelectMonthMeanSoilTempGraph from "./WeatherGraphs/SelectMonthSoilTempGra
 export default {
   name: 'MainSection',
   components: {
+    Images,
     NdviComparisonGraph,
     NdviSelectMonthGraph,
     NdviOverlayGraph,
