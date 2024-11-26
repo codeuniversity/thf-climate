@@ -1,11 +1,39 @@
 <template>
   <v-container class="main-section" fluid>
-    <p class="main-text">Graphs and images go here</p>
+    <NdviComparisonGraph />
+    <NdviSelectMonthGraph />
+    <NdviOverlayGraph />
+    <MedianTempGraph />
+    <MeanSoilTempGraph />
+    <MeanSoilMoistureGraph />
+    <AugustMeanSoilTempGraph />
+    <SelectMonthMeanSoilTempGraph />
   </v-container>
 </template>
 
 <script>
+import NdviComparisonGraph from "./NdviGraphs/NdviComparisonGraph.vue"
+import NdviSelectMonthGraph from "./NdviGraphs/NdviSelectMonthGraph.vue"
+import NdviOverlayGraph from "./NdviGraphs/NdviOverlayGraph.vue"
+import MedianTempGraph from "./WeatherGraphs/MedianTempGraph.vue"
+import MeanSoilTempGraph from "./WeatherGraphs/SoilTempGraph.vue"
+import MeanSoilMoistureGraph from "./WeatherGraphs/SoilMoistureGraph.vue"
+import AugustMeanSoilTempGraph from "./WeatherGraphs/AugustSoilTempGraph.vue"
+import SelectMonthMeanSoilTempGraph from "./WeatherGraphs/SelectMonthSoilTempGraph.vue"
 
+export default {
+  name: 'MainSection',
+  components: {
+    NdviComparisonGraph,
+    NdviSelectMonthGraph,
+    NdviOverlayGraph,
+    MedianTempGraph,
+    MeanSoilTempGraph,
+    MeanSoilMoistureGraph,
+    AugustMeanSoilTempGraph,
+    SelectMonthMeanSoilTempGraph
+  }
+}
 </script>
 
 <style scoped>
