@@ -8,7 +8,7 @@ from .weather.router import router as weather_router
 
 app = FastAPI()
 
-origins = ["http://localhost:5173"]
+origins = ["http://localhost:5173", "https://thf-climate-frontend-run-1020174331409.europe-west3.run.app"]
 
 app.add_middleware(
     CORSMiddleware,

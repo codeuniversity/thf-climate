@@ -1,21 +1,27 @@
 <template>
   <h1 id="app">
-    <TestComponent />
-    <MedianTempGraph />
+    <Header />
+    <IntroSection />
+    <MainSection />
+    <Footer />
   </h1>
 </template>
 
 <script>
-  import TestComponent from "./components/TestComponent.vue"
-  // import MedianTempGraph from "./components/TestGraphOne.vue"
+  import Header from "./components/Header.vue"
+  import IntroSection from "./components/IntroSection.vue"
+  import MainSection from "./components/MainSection.vue"
+  import Footer from "./components/Footer.vue"
 
   export default {
     name: 'App',
     components: {
-      TestComponent,
-      // MedianTempGraph
+      Header,
+      IntroSection,
+      MainSection,
+      Footer
     }
-  };
+  }
 </script>
 
 <style scoped></style>
