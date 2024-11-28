@@ -23,7 +23,6 @@
 
 ## Project Architecture
 To-do
-
 ## Data Sources
 - [Google Earth Engine](https://earthengine.google.com)
 

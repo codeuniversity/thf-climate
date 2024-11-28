@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# service file to connect gee auth  
+service-account-file.json
 
 # C extensions
 *.so
