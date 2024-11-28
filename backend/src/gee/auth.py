@@ -1,11 +1,12 @@
 import base64
 import os
 import sys
+import ee
 
 # Add the project root to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
-import ee
+
 
 from src import config
 from src.config import Environment
