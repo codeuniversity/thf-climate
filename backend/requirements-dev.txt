@@ -1,5 +1,5 @@
 -r requirements.txt
 
-pytest
-pytest-cov
-ruff
+pytest >= 8.3.3, <8.4.0
+pytest-cov >= 6.0.0
+ruff >= 0.7.4

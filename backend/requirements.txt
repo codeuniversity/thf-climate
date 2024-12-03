@@ -1,6 +1,6 @@
-earthengine-api
-python-dotenv
-pandas
-plotly
-fastapi
-uvicorn
+earthengine-api == 1.4.0
+python-dotenv == 1.0.1
+pandas == 2.2.3
+plotly == 5.24.1
+fastapi[standard] >=0.115.5, <0.116.0 # allows patches, but not breaking changes
+uvicorn[standard] >=0.32.1, <0.33.0
