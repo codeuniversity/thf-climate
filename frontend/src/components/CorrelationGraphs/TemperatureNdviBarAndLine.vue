@@ -23,11 +23,11 @@ export default {
     const ndviData = ref(null)
     const startDate = ref(1514761200) // 2018-01-01
     const endDate = ref(1704063599) // 2023-12-31
-    const temporalResolution = ref("Monthly")
-    const aggregation = ref("Mean")
+    const temporalResolution = ref("Monthly") // options: "Daily", "Monthly"
+    const aggregation = ref("Mean") // options: "Mean", "Median", "Max", "Min"
 
     const fetchTemperatureData = async () => {
-      const apiUrl = 'http://localhost:8000/weather/index'
+      const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/weather/index'
       const params = {
         weatherVariable: "temperature_2m",
         startDate: startDate.value,
@@ -47,7 +47,7 @@ export default {
     }
 
     const fetchNdviData = async () => {
-      const apiUrl = 'http://localhost:8000/index/ndvi'
+      const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi'
       const params = {
         startDate: startDate.value,
         endDate: endDate.value,
@@ -77,7 +77,7 @@ export default {
         const tempTrace = {
           x: tempTimestamps,
           y: tempValues,
-          type: 'bar',
+          type: 'bar', // can change to lines+markers
           name: 'Temperature (°C)',
           marker: { color: 'red' }
         };
@@ -94,17 +94,17 @@ export default {
         const layout = {
           title: 'NDVI vs. Monthly Temperature for Tempelhofer Feld (2018-2023)',
           xaxis: { title: 'Date', type: 'date', rangeslider: { visible: true } },
-          yaxis: { title: 'NDVI' },
+          yaxis: { title: 'Temperature (°C)' },
           yaxis2: {
-            title: 'Temperature (°C)',
+            title: 'NDVI',
             overlaying: 'y',
             side: 'right',
           },
           legend: { x: 1.1, y: 0.5 },
           template: 'plotly_white'
-  };
+        };
 
-  Plotly.newPlot('plotlyGraphTemperatureNdvi', [tempTrace, ndviTrace], layout);
+        Plotly.newPlot('plotlyGraphTemperatureNdvi', [tempTrace, ndviTrace], layout);
       }
     }
 
