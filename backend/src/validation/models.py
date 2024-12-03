@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from src.constants import AggregationMethod, LocationName, TemporalResolution, Unit
+from src.constants import AggregationMethod, LocationName, TemporalResolution, Unit, IndexType
 
 
 class DataPoint(BaseModel):
@@ -28,9 +28,18 @@ class TemperatureResponse(BaseModel):
 
 
 class NDVIMetaResponse(BaseMeta):
+    indexType: IndexType = IndexType.NDVI
     unit: Unit = Unit.NORMALIZED_DIFFERENCE
 
 
 class NDVIResponse(BaseMeta):
     meta: NDVIMetaResponse
+    data: List[DataPoint]
+
+class MSAVIMetaResponse(BaseMeta):
+    indexType: IndexType = IndexType.MSAVI
+    unit: Unit = Unit.DIMENSIONLESS
+
+class MSAVIResponse(BaseMeta):
+    meta: MSAVIMetaResponse
     data: List[DataPoint]
