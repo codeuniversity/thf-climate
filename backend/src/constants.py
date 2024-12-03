@@ -29,6 +29,7 @@ class Unit(str, Enum):
     MM = "mm"
     PERCENT = "%"
     M3 = "m³/m³"
+    DIMENSIONLESS = "Dimensionless"
 
 
 class LocationPolygon(Enum):
