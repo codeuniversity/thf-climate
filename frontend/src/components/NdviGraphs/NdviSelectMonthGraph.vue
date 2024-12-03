@@ -42,7 +42,7 @@ export default {
     const endDate = ref(1704063599) // 2023-12-31
 
     const fetchNdviData = async () => {
-      const apiUrl = 'http://localhost:8000/index/ndvi'
+      const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi'
       try {
         const response = await axios.get(apiUrl, { 
           params: { 
