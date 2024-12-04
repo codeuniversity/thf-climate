@@ -10,5 +10,4 @@ async def get_weather_data(request: schemas.WeatherDataRequest = Depends()):
 
 @router.get("/test-env")
 async def testenv():
-    return os.getenv("GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS")
-
+    return {"a": os.getenv("GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS"), "b": os.getenv("GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL")}
