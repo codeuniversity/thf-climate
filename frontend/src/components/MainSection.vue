@@ -11,6 +11,8 @@
     <MeanSoilMoistureGraph />
     <AugustMeanSoilTempGraph />
     <SelectMonthMeanSoilTempGraph />
+    <TempDifferenceGraph />
+    <SoilTempDifferenceGraph />
   </v-container>
 </template>
 
@@ -26,6 +28,8 @@ import AugustMeanSoilTempGraph from "./WeatherGraphs/AugustSoilTempGraph.vue"
 import SelectMonthMeanSoilTempGraph from "./WeatherGraphs/SelectMonthSoilTempGraph.vue"
 import TemperatureNdviBarAndLine from "./CorrelationGraphs/TemperatureNdviBarAndLine.vue"
 import TemperatureNdviScatter from "./CorrelationGraphs/TemperatureNdviScatter.vue"
+import TempDifferenceGraph from "./WeatherGraphs/TempDifferenceGraph.vue"
+import SoilTempDifferenceGraph from "./WeatherGraphs/SoilTempDifferenceGraph.vue"
 
 export default {
   name: 'MainSection',
@@ -39,6 +43,8 @@ export default {
     MeanSoilMoistureGraph,
     AugustMeanSoilTempGraph,
     SelectMonthMeanSoilTempGraph,
+    TempDifferenceGraph,
+    SoilTempDifferenceGraph,
     TemperatureNdviBarAndLine,
     TemperatureNdviScatter
   }
