@@ -9,13 +9,13 @@ INDEX_NULL_STRING = "NULL"
 def get_index_image_by_index_type(index_type: IndexType, image: ee.Image):
     match index_type:
         case IndexType.NDVI:
-            return image.normalizedDifference(["B8", "B4"]).rename("NDVI")
+            return image.normalizedDifference(["B8", "B4"]).rename("NDVI") # B8 = NIR, B4 = RED
         case IndexType.MSAVI:
             return image.expression(
                 expression="((2 * NIR + 1) - ((2 * NIR + 1)**2 - 8 * (NIR - RED))**0.5) / 2",
                 opt_map={
-                    "NIR": image.select("B4"),
-                    "RED": image.select("B8"),
+                    "NIR": image.select("B8"),
+                    "RED": image.select("B4"),
                 },
             ).rename("MSAVI")
         case _:
