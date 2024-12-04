@@ -54,7 +54,7 @@ export default {
     const aggregationOptions = ["Mean", "Median", "Max", "Min"]
 
     const fetchNdviData = async (params) => {
-      const apiUrl = 'http://localhost:8000/index/ndvi'
+      const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi'
       try {
         const response = await axios.get(apiUrl, { params })
         ndviData.value = response.data
