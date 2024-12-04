@@ -7,7 +7,3 @@ router = APIRouter()
 @router.get("/index", response_model=schemas.WeatherDataResponse)
 async def get_weather_data(request: schemas.WeatherDataRequest = Depends()):
     return await service.fetch_weather_data(request)
-
-@router.get("/test-env")
-async def testenv():
-    return {"a": os.getenv("GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_CREDENTIALS"), "b": os.getenv("GOOGLE_EARTH_ENGINE_SERVICE_ACCOUNT_EMAIL")}
