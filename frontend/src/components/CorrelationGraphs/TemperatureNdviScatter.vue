@@ -13,7 +13,7 @@
     <script>
     import axios from 'axios'
     import Plotly from 'plotly.js-dist-min'
-    import { onMounted, ref, render } from 'vue'
+    import { onMounted, ref } from 'vue'
     
     export default {
       name: 'TemperatureNdviScatter',
@@ -21,7 +21,7 @@
         const temperatureData = ref(null)
         const ndviData = ref(null)
         const startDate = ref(1514761200) // 2018-01-01
-        const endDate = ref(1704063599) // 2023-12-31
+        const endDate = ref(1733007599) // 2024-11-30
         const temporalResolution = ref("Monthly") // options: "Daily", "Monthly"
         const aggregation = ref("Mean") // options: "Mean", "Median", "Max", "Min"
     
@@ -63,59 +63,59 @@
             console.error("Error fetching NDVI data:", error)
           }
         }
-
-        const calculateRegression = (xValues, yValues) => {
-          const n = xValues.length
-          const sumX = xValues.reduce((acc, val) => acc + val, 0)
-          const sumY = yValues.reduce((acc, val) => acc + val, 0)
-          const sumXY = xValues.reduce((acc, val, index) => acc + val * yValues[index], 0)
-          const sumX2 = xValues.reduce((acc, val) => acc + val * val, 0)
-
-          const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX)
-          const intercept = (sumY - slope * sumX) / n
-
-          return { slope, intercept }
-        }
     
         const renderPlot = () => {
           if (temperatureData.value && ndviData.value) {
             const tempValues = temperatureData.value.data.map(entry => entry.value)
             const ndviValues = ndviData.value.data.map(entry => entry.value)
 
-            const { slope, intercept } = calculateRegression(tempValues, ndviValues)
-            const trendLineValues = tempValues.map(x => slope * x + intercept)
-            const trendlineEquation = `y = ${slope.toFixed(2)}x + ${intercept.toFixed(2)}`;
+            const timestamps = temperatureData.value.data.map(entry => entry.timestamp);
+            const monthsAndYears = timestamps.map(ts => {
+              const date = new Date(ts * 1000)
+              const month = date.toLocaleString('default', { month: 'long' })
+              const year = date.getFullYear()
+              return { month, year }
+            })
+
+            // Map months to a circular grayscale gradient
+            const months = monthsAndYears.map(({ month }) => new Date(Date.parse(month + " 1")).getMonth())
+            const monthColors = months.map(month => {
+              // Convert month index (0-11) to circular position
+              const angle = (month / 12) * 2 * Math.PI // 0-2π range
+              // Use cosine to create smooth gradient: July (π) = 0 (black), January (0) = 1 (white)
+              const intensity = Math.round((Math.cos(angle) + 1) / 2 * 255) // Scale cosine to 0-255
+              return `rgb(${intensity}, ${intensity}, ${intensity})`
+            })
 
             const scatterTrace = {
               x: tempValues,
               y: ndviValues,
               mode: 'markers',
-              marker: { color: 'green' },
+              marker: {
+                color: monthColors,
+                size: 8,
+                line: {
+                  color: 'black',
+                  width: 1,
+                },
+              },
               type: 'scatter',
-              name: 'Temperature vs NDVI'
-            }
-
-            const trendLineTrace = {
-              x: tempValues,
-              y: trendLineValues,
-              mode: 'lines',
-              line: { color: 'grey', dash: 'dash' },
-              type: 'scatter',
-              name: `Trend Line: ${trendlineEquation}`
-            }
+              name: 'Temperature vs. NDVI',
+              hovertemplate: '%{x}°C<br>NDVI: %{y}<br>%{customdata.month} %{customdata.year}<extra></extra>',
+              customdata: monthsAndYears,
+            };
 
             const layout = {
               title: 'Scatter Plot of Temperature vs. NDVI',
               xaxis: { title: 'Temperature (°C)' },
               yaxis: { title: 'NDVI' },
               template: 'plotly_white',
-              legend: { x: 1.02, y: 0.5 },
-            }
+            };
 
-            Plotly.newPlot('plotlyScatterTemperatureNdvi', [scatterTrace, trendLineTrace], layout)
+            Plotly.newPlot('plotlyScatterTemperatureNdvi', [scatterTrace], layout)
           }
         }
-    
+
         onMounted(() => {
           fetchTemperatureData()
           fetchNdviData()

@@ -22,7 +22,7 @@ export default {
     const temperatureData = ref(null)
     const ndviData = ref(null)
     const startDate = ref(1514761200) // 2018-01-01
-    const endDate = ref(1704063599) // 2023-12-31
+    const endDate = ref(1733007599) // 2024-11-30
     const temporalResolution = ref("Monthly") // options: "Daily", "Monthly"
     const aggregation = ref("Mean") // options: "Mean", "Median", "Max", "Min"
 
@@ -92,7 +92,7 @@ export default {
         };
 
         const layout = {
-          title: 'NDVI vs. Monthly Temperature for Tempelhofer Feld (2018-2023)',
+          title: 'NDVI vs. Monthly Temperature for Tempelhofer Feld (2018-2024)',
           xaxis: { title: 'Date', type: 'date', rangeslider: { visible: true } },
           yaxis: { title: 'Temperature (°C)' },
           yaxis2: {
