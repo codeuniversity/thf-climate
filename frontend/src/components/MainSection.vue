@@ -1,14 +1,19 @@
 <template>
   <v-container class="main-section" fluid>
-    <Images />
+    <TemperatureNdviBarAndLine />
+    <TemperatureNdviScatter />
+    <TempDifferenceGraph />
+    <SoilTempDifferenceGraph />
+    <NdviDifferenceGraph />
+    <NdviOverlayGraph />
+    <!-- <Images />
     <NdviComparisonGraph />
     <NdviSelectMonthGraph />
-    <NdviOverlayGraph />
     <MedianTempGraph />
     <MeanSoilTempGraph />
     <MeanSoilMoistureGraph />
     <AugustMeanSoilTempGraph />
-    <SelectMonthMeanSoilTempGraph />
+    <SelectMonthMeanSoilTempGraph /> -->
   </v-container>
 </template>
 
@@ -22,6 +27,11 @@ import MeanSoilTempGraph from "./WeatherGraphs/SoilTempGraph.vue"
 import MeanSoilMoistureGraph from "./WeatherGraphs/SoilMoistureGraph.vue"
 import AugustMeanSoilTempGraph from "./WeatherGraphs/AugustSoilTempGraph.vue"
 import SelectMonthMeanSoilTempGraph from "./WeatherGraphs/SelectMonthSoilTempGraph.vue"
+import TemperatureNdviBarAndLine from "./CorrelationGraphs/TemperatureNdviBarAndLine.vue"
+import TemperatureNdviScatter from "./CorrelationGraphs/TemperatureNdviScatter.vue"
+import TempDifferenceGraph from "./WeatherGraphs/TempDifferenceGraph.vue"
+import SoilTempDifferenceGraph from "./WeatherGraphs/SoilTempDifferenceGraph.vue"
+import NdviDifferenceGraph from "./NdviGraphs/NdviDifferenceGraph.vue"
 
 export default {
   name: 'MainSection',
@@ -34,7 +44,12 @@ export default {
     MeanSoilTempGraph,
     MeanSoilMoistureGraph,
     AugustMeanSoilTempGraph,
-    SelectMonthMeanSoilTempGraph
+    SelectMonthMeanSoilTempGraph,
+    TempDifferenceGraph,
+    SoilTempDifferenceGraph,
+    TemperatureNdviBarAndLine,
+    TemperatureNdviScatter,
+    NdviDifferenceGraph
   }
 }
 </script>

@@ -36,10 +36,10 @@
       const plotlyChart = ref(null);
   
       const fetchData = async () => {
-        const apiUrl = 'http://localhost:8000/weather/index';
+        const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/weather/index';
   
         const params = {
-          weatherVariable: "soil_temperature_0_to_7cm",
+          weatherVariable: "soil_moisture_0_to_7cm",
           startDate: new Date(startDate.value).getTime() / 1000,
           endDate: new Date(endDate.value).getTime() / 1000,
           location: "TEMPELHOFER_FELD",

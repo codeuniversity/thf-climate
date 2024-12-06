@@ -1,6 +1,6 @@
 <template>
     <v-container>
-      <h2 class="pb-4">NDVI Year Overlay (2018-2023)</h2>
+      <h2 class="pb-4">NDVI Year Overlay (2018-2024)</h2>
       <v-row>
         <div 
           id="plotlyGraphNdviOverlay" 
@@ -21,11 +21,11 @@
     setup() {
       const ndviData = ref(null)
       const startDate = ref(1514761200) // 2018-01-01
-      const endDate = ref(1704063599) // 2023-12-31
-      const years = [2018, 2019, 2020, 2021, 2022, 2023]
+      const endDate = ref(1733007599) // 2024-11-30
+      const years = [2018, 2019, 2020, 2021, 2022, 2023, 2024]
   
       const fetchNdviData = async (params) => {
-        const apiUrl = 'http://localhost:8000/index/ndvi'
+        const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi'
         try {
           const response = await axios.get(apiUrl, { params })
           ndviData.value = response.data
