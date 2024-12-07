@@ -19,10 +19,11 @@
 
 ## Prerequisites
 - Python 3.x
+- Node.js, npm/yarn
 - Git
 
 ## Project Architecture
-To-do
+![THF Project Architecture](architecture_diagram.png)
 
 ## Data Sources
 - [Google Earth Engine](https://earthengine.google.com)
