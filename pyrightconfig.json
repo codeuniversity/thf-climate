@@ -1,0 +1,10 @@
+{
+    "include": [
+        "backend/src"
+    ],
+    "exclude": [
+        "**/venv",
+        "**/__pycache__"
+    ],
+    "reportPrivateImportUsage": "none"
+}

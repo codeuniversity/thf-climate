@@ -4,6 +4,9 @@
     "files.trimFinalNewlines": true,
     "python.analysis.autoImportCompletions": true,
     "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticSeverityOverrides": {
+    "reportPrivateImportUsage": "none"
+    },
     "[python]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
