@@ -1,19 +1,11 @@
 <template>
   <v-container class="main-section" fluid>
-    <TemperatureNdviBarAndLine />
-    <TemperatureNdviScatter />
-    <TempDifferenceGraph />
-    <SoilTempDifferenceGraph />
-    <NdviDifferenceGraph />
-    <NdviOverlayGraph />
-    <!-- <Images />
-    <NdviComparisonGraph />
+    <Ndvi />
+    <Images />
     <NdviSelectMonthGraph />
-    <MedianTempGraph />
-    <MeanSoilTempGraph />
-    <MeanSoilMoistureGraph />
-    <AugustMeanSoilTempGraph />
-    <SelectMonthMeanSoilTempGraph /> -->
+    <NdviOverlayGraph />
+    <TempVsNdvi />
+    <TemperatureNdviBarAndLine />
   </v-container>
 </template>
 
@@ -32,6 +24,8 @@ import TemperatureNdviScatter from "./CorrelationGraphs/TemperatureNdviScatter.v
 import TempDifferenceGraph from "./WeatherGraphs/TempDifferenceGraph.vue"
 import SoilTempDifferenceGraph from "./WeatherGraphs/SoilTempDifferenceGraph.vue"
 import NdviDifferenceGraph from "./NdviGraphs/NdviDifferenceGraph.vue"
+import Ndvi from "./Text/Ndvi.vue"
+import TempVsNdvi from "./Text/TempVsNdvi.vue"
 
 export default {
   name: 'MainSection',
@@ -49,7 +43,9 @@ export default {
     SoilTempDifferenceGraph,
     TemperatureNdviBarAndLine,
     TemperatureNdviScatter,
-    NdviDifferenceGraph
+    NdviDifferenceGraph,
+    Ndvi,
+    TempVsNdvi
   }
 }
 </script>

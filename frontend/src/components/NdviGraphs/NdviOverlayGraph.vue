@@ -1,6 +1,5 @@
 <template>
     <v-container>
-      <h2 class="pb-4">NDVI Year Overlay (2018-2024)</h2>
       <v-row>
         <div 
           id="plotlyGraphNdviOverlay" 
@@ -54,7 +53,7 @@
           })
   
           const layout = {
-            title: 'NDVI of Tempelhofer Feld',
+            title: 'NDVI of Tempelhofer Feld - Yearly Overlay (2018-2024)',
             xaxis: { 
               title: '', 
               tickmode: 'array', 

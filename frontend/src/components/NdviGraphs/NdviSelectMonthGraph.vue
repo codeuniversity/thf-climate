@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <h2 class="pb-10">NDVI Monthly Means (2018-2023)</h2>
     <v-row justify="center">
       <v-col class="py-0" style="max-width: 350px">
         <v-select 
@@ -39,7 +38,7 @@ export default {
       "September", "October", "November", "December"
     ]
     const startDate = ref(1514761200) // 2018-01-01
-    const endDate = ref(1704063599) // 2023-12-31
+    const endDate = ref(1733007599) // 2024-11-30
 
     const fetchNdviData = async () => {
       const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi'
