@@ -3,10 +3,7 @@ from enum import Enum
 from pydantic import BaseModel, Field, ValidationInfo, field_validator
 
 from src.constants import AggregationMethod, LocationName, TemporalResolution, Unit
-from src.validation.utils import (
-    validate_temperature_timestamp_in_range,
-    validate_timestamp_start_date_before_end_date,
-)
+from src.weather.utils import validate_timestamp_in_range
 
 class WeatherVariable(str, Enum):
     TEMPERATURE = "temperature_2m"
@@ -34,8 +31,8 @@ class WeatherDataRequest(BaseModel):
     aggregation: AggregationMethod = Field(..., description="Aggregation method")
 
     @field_validator("endDate")
-    def validate_temperature_timestamp_in_range(cls, v, info: ValidationInfo):
-        return validate_temperature_timestamp_in_range(
+    def validate_timestamp_in_range(cls, v, info: ValidationInfo):
+        return validate_timestamp_in_range(
             info.data.get("startDate"), v
         )
 
