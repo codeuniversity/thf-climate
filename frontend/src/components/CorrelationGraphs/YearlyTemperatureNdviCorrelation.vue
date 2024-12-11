@@ -1,13 +1,13 @@
 <template>
-    <v-container>
-      <h2 class="pb-10">Yearly NDVI vs. Temperature</h2>
-      <v-row justify="center">
-        <div ref="plotContainer" style="width: 100%; height: 400px" class="d-flex justify-center"></div>
-      </v-row>
-    </v-container>
-  </template>
-  
-  <script>
+  <v-container>
+    <h2 class="pb-10">Yearly NDVI vs. Temperature</h2>
+    <v-row justify="center">
+      <div ref="plotContainer" style="width: 100%; height: 400px" class="d-flex justify-center"></div>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
 import axios from 'axios';
 import Plotly from 'plotly.js-dist-min';
 import { onMounted, ref, watch } from 'vue';
@@ -120,9 +120,6 @@ export default {
     return { plotContainer };
   },
 };
+</script>
 
-
-  </script>
-  
-  <style scoped></style>
-  
+<style scoped></style>
