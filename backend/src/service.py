@@ -169,6 +169,7 @@ def sat_index_service(
         sat_index_time_series = get_sat_index_info(
             masked_images, LocationPolygon[location.value].value, index_type
         )
+        # call caching script here
 
     # Get cached range
     if cache_start_date:
