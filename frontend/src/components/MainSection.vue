@@ -1,5 +1,6 @@
 <template>
   <v-container class="main-section" fluid>
+    <YearlyNdviTemperaturePlot />
     <TemperatureNdviBarAndLine />
     <TemperatureNdviScatter />
     <TempDifferenceGraph />
@@ -32,11 +33,13 @@ import TemperatureNdviScatter from "./CorrelationGraphs/TemperatureNdviScatter.v
 import TempDifferenceGraph from "./WeatherGraphs/TempDifferenceGraph.vue"
 import SoilTempDifferenceGraph from "./WeatherGraphs/SoilTempDifferenceGraph.vue"
 import NdviDifferenceGraph from "./NdviGraphs/NdviDifferenceGraph.vue"
+import YearlyNdviTemperaturePlot from "./CorrelationGraphs/YearlyTemperatureNdviCorrelation.vue"
 
 export default {
   name: 'MainSection',
   components: {
     Images,
+    YearlyNdviTemperaturePlot,
     NdviComparisonGraph,
     NdviSelectMonthGraph,
     NdviOverlayGraph,
