@@ -1,14 +1,15 @@
 from collections import defaultdict
 from datetime import datetime
 from .schemas import WeatherDataResponse, WeatherDataMeta, DataPoint, WeatherVariableUnit
-from .models import WeatherData
+from .models import WeatherDataCached
 from ..constants import TemporalResolution, AggregationMethod
 from statistics import mean, median
 
 
-async def fetch_weather_data(request):
+async def fetch_weather_data(request) -> WeatherDataResponse:
     # get and format the data
-    data = WeatherData.get(request.weatherVariable, request.temporalResolution, request.startDate, request.endDate, request.location)
+    data_provider = WeatherDataCached()
+    data = data_provider.fetch_data(request.weatherVariable, request.temporalResolution, request.startDate, request.endDate, request.location)
     formated_data = await format_weather_data(data, request.weatherVariable, request.temporalResolution, request.aggregation)
 
     return WeatherDataResponse(
@@ -39,22 +40,21 @@ async def format_weather_data(data, weatherVariable, temporalResolution, aggrega
         elif temporalResolution == TemporalResolution.MONTHLY:
             date = datetime.fromisoformat(timestamp).strftime('%Y-%m')
             date = datetime.strptime(date + "-01", "%Y-%m-%d")
-        list_values[date].append(value)
+        if value != None:
+            list_values[date].append(value)
 
     # Calculate aggregation values
-    if aggregation == AggregationMethod.MEAN:
-        list_values = {date: mean(temps) for date, temps in list_values.items()}
-    elif aggregation == AggregationMethod.MEDIAN:
-        list_values = {date: median(temps) for date, temps in list_values.items()}
-    elif aggregation == AggregationMethod.MAX:
-        list_values = {date: max(temps) for date, temps in list_values.items()}
-    elif aggregation == AggregationMethod.MIN:
-        list_values = {date: min(temps) for date, temps in list_values.items()}
+    aggregation_methods = {
+        AggregationMethod.MEAN: lambda temps: mean(temps),
+        AggregationMethod.MEDIAN: lambda temps: median(temps),
+        AggregationMethod.MAX: lambda temps: max(temps),
+        AggregationMethod.MIN: lambda temps: min(temps),
+    }
+    list_values = {date: aggregation_methods[aggregation](temps) for date, temps in list_values.items()}
 
     # data_points
-    data_points = []
-    for date, temp in list_values.items():
-        timestamp = date.strftime("%s")
-        data_points.append(DataPoint(value=temp, timestamp=timestamp))
+    data_points = list(
+        map(lambda item: DataPoint(value=item[1], timestamp=item[0].strftime("%s")), list_values.items())
+    )
 
     return data_points
