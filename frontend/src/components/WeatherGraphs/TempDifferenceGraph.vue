@@ -29,8 +29,8 @@
     setup() {
       const weatherData = ref(null);
       const startDate = ref("1990-01-01");
-      const endDate = ref("2023-12-31");
-      const selectedMonth = ref(0); // Default to January (0-indexed)
+      const endDate = ref("2024-11-30");
+      const selectedMonth = ref(7); // Default to August (the most severe month) (0-indexed)
       const months = ref([
         "January",
         "February",
