@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="center">
+    <!-- <v-row justify="center">
       <v-col class="py-0" style="max-width: 350px">
         <v-select 
           v-model="month" 
@@ -11,7 +11,7 @@
           required 
         />
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <div 
         id="plotlyGraphNdviMonthly" 

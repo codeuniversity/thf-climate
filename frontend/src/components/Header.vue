@@ -4,7 +4,7 @@
       <div class="overlay">
         <h1 class="title">Climates of Tempelhofer Feld</h1>
         <h2 class="subtitle">An Earth Observation Project</h2>
-        <v-btn icon density="comfortable">
+        <v-btn icon density="comfortable" @click="scrollToIntro">
           <v-icon>mdi-chevron-down</v-icon>
         </v-btn>
       </div>
@@ -15,9 +15,29 @@
 <script>
 export default {
   name: 'Header',
-  data() {
-    return {
-      //
+  methods: {
+    scrollToIntro() {
+      const introSection = document.getElementById('introduction-section')
+      if (introSection) {
+        introSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  },
+  mounted() {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.scrollToIntro()
+        }
+      },
+      {
+        threshold: 0.3,
+      }
+    );
+    
+    const introSection = document.getElementById('introduction-section')
+    if (introSection) {
+      observer.observe(introSection)
     }
   }
 }
@@ -26,13 +46,17 @@ export default {
 <style scoped>
 .header-container {
   position: relative;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
 }
 
 .header-image {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   object-fit: cover;
   object-position: center;
+  display: block;
 }
 
 .overlay {

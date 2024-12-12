@@ -1,5 +1,5 @@
 <template>
-    <v-container class="about-section pt-16" fluid>
+    <v-container id="about-section" class="about-section pt-16" fluid>
       <v-row justify="center">
         <v-col cols="12" md="10">
           <h3>A CODE University Professor-led Project </h3>
@@ -16,18 +16,22 @@
             The success of this project was made possible by the collaborative efforts of our team members:
           </p>
           <ul class="pt-4">
-              <li>[team member]</li>
-              <li>[team member]</li>
-              <li>[team member]</li>
-              <li>[team member]</li>
-              <li>[team member]</li>
-              <li>[team member]</li>
-            </ul>
-          <p class="about-text pt-4">
+              <li>Essam Ali</li>
+              <li>Till Ermold</li>
+              <li>Tom-Perry Lustig</li>
+              <li>Jules Morley</li>
+              <li>Péter T. Winkler</li>
+          </ul>
+          <p class="about-text pt-4 pb-6">
+            And, of course, a huge thank you goes out to Prof. Dr. Adam Roe for coming up with the idea for the project and guiding us along the way.
+          </p>
+          <p class="about-text pt-4 pb-6">
             Looking ahead, we hope this work inspires further studies and applications in urban climate resilience.
           </p>
           <p class="about-text pt-4">
-            [insert github repo link]
+            Github Repository:
+            <br/>
+            <a href="https://github.com/codeuniversity/thf-climate">https://github.com/codeuniversity/thf-climate</a>
           </p>
         </v-col>
       </v-row>
@@ -48,7 +52,7 @@
   <style scoped>
   .about-section {
     text-align: center;
-    height: 100vh;
+    background-color: #e8fae6;
   }
   
   .about-text {

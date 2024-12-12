@@ -11,6 +11,7 @@
 <style scoped>
 .footer-container {
   text-align: center;
+  background-color: #e8fae6;
 }
 
 .footer-text {
