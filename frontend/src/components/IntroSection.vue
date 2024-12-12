@@ -1,7 +1,7 @@
 <template>
-  <v-container class="introduction-section" fluid>
+  <v-container class="introduction-section pb-16" fluid>
     <v-row justify="center">
-      <v-col cols="12" md="10">
+      <v-col cols="12" md="10" class="pt-10">
         <p style="font-weight: 600; font-size: 1.4rem">
           The climate is changing, and so is the vegetation at Berlin’s beloved Tempelhofer Feld.
         </p>
@@ -49,7 +49,6 @@ export default {
 
 <style scoped>
 .introduction-section {
-  margin: 50px 0;
   text-align: center;
 }
 

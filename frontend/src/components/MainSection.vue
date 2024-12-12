@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-container fluid>
+    <v-container fluid class="pa-3">
       <!-- Temperature Section -->
       <v-row>
-        <v-col :cols="4">
+        <v-col :cols="4" class="left-column">
           <section>
             <h3 class="pb-4">Temperature</h3>
             <p>
@@ -30,7 +30,7 @@
 
       <!-- NDVI Section -->
       <v-row>
-        <v-col :cols="4">
+        <v-col :cols="4" class="left-column">
           <section>
             <h3 class="pb-4">NDVI</h3>
             <p>
@@ -51,19 +51,7 @@
         <v-col :cols="8">
           <section>
             <v-container>
-              <v-img
-                src="https://via.placeholder.com/800x400"
-                alt="NDVI image"
-                aspect-ratio="16/9"
-                class="mb-10"
-              ></v-img>
-              <v-img
-                src="https://via.placeholder.com/800x400"
-                alt="NDVI image"
-                aspect-ratio="16/9"
-                class="mb-10"
-              ></v-img>
-              <p>[Satellite images of THF and corresponding NDVI layer go above]</p>
+              <Images />
             </v-container>
           </section>
         </v-col>
@@ -71,7 +59,7 @@
 
       <!-- NDVI Graph Section -->
       <v-row>
-        <v-col :cols="4">
+        <v-col :cols="4" class="left-column">
           <section>
             <h3 class="pb-4">NDVI Results</h3>
             <p>
@@ -81,7 +69,7 @@
               Initially, we expected the NDVI to decline over the years due to increased drought and higher summer temperatures. However, our observations show that the NDVI has been rising on average, likely driven by shorter and milder winters and longer growing seasons.
             </p>
             <p class="pt-6">
-              [Insert part about selecting month for montly graph]
+              [move month select for NDVI graph here]
             </p>
           </section>
         </v-col>
@@ -89,31 +77,17 @@
         <v-col :cols="8">
           <section>
             <v-container>
-              <v-img
-                src="https://via.placeholder.com/800x400"
-                alt="NDVI graph"
-                aspect-ratio="16/9"
-                class="mb-10"
-              ></v-img>
-              <v-img
-                src="https://via.placeholder.com/800x400"
-                alt="NDVI graph"
-                aspect-ratio="16/9"
-                class="mb-10"
-              ></v-img>
-              <v-img
-                src="https://via.placeholder.com/800x400"
-                alt="NDVI graph"
-                aspect-ratio="16/9"
-              ></v-img>
+              <YearlyNdviPlot />
+              <NdviSelectMonthGraph />
+              <NdviOverlayGraph />
             </v-container>
           </section>
         </v-col>
       </v-row>
 
       <!-- Temperature vs. NDVI Section -->
-      <v-row>
-        <v-col :cols="4">
+      <v-row style="height: 100vh;">
+        <v-col :cols="4" class="left-column">
           <section>
             <h3 class="pb-4">Understanding the Dynamics of Tempelhofer Feld’s Temperature and Vegetation</h3>
             <p>
@@ -137,20 +111,15 @@
         <v-col :cols="8">
           <section>
             <v-container>
-              <v-img
-                src="https://via.placeholder.com/800x400"
-                alt="Temperature vs. NDVI graph"
-                aspect-ratio="16/9"
-                class="mb-10"
-              ></v-img>
+              <YearlyTemperatureNdviCorrelation />
             </v-container>
           </section>
         </v-col>
       </v-row>
 
       <!-- Conclusion -->
-      <v-row class="pb-10">
-        <v-col :cols="4">
+      <v-row style="height: 100vh;">
+        <v-col :cols="4" class="left-column pb-16">
           <section>
             <h3 class="pb-4">What We Learned and What Comes Next</h3>
             <p>
@@ -168,11 +137,11 @@
         <v-col :cols="8">
           <section>
             <v-container>
-              <v-img
-                src="https://via.placeholder.com/800x400"
-                alt="Tempelhofer Feld"
-                aspect-ratio="16/9"
-              ></v-img>
+              <img
+                src="@/assets/images/thf-sunset.jpg"
+                alt="Tempelhofer Feld at sunset"
+                style="width: 100%;"
+              />
             </v-container>
           </section>
         </v-col>
@@ -182,14 +151,24 @@
 </template>
 
 <script>
-import MedianTempGraph from './WeatherGraphs/MedianTempGraph.vue';
-import TempDifferenceGraph from './WeatherGraphs/TempDifferenceGraph.vue';
+import YearlyTemperatureNdviCorrelation from './CorrelationGraphs/YearlyTemperatureNdviCorrelation.vue'
+import MedianTempGraph from './WeatherGraphs/MedianTempGraph.vue'
+import TempDifferenceGraph from './WeatherGraphs/TempDifferenceGraph.vue'
+import Images from './Images.vue'
+import YearlyNdviPlot from './NdviGraphs/YearlyNdvi.vue'
+import NdviSelectMonthGraph from './NdviGraphs/NdviSelectMonthGraph.vue'
+import NdviOverlayGraph from './NdviGraphs/NdviOverlayGraph.vue'
 
 export default {
   name: "MainSection",
   components: {
     MedianTempGraph,
     TempDifferenceGraph,
+    YearlyTemperatureNdviCorrelation,
+    Images,
+    YearlyNdviPlot,
+    NdviSelectMonthGraph,
+    NdviOverlayGraph,
   },
   data() {
     return {
@@ -207,5 +186,9 @@ section {
 p {
   font-weight: 300;
   line-height: 1.5;
+}
+
+.left-column {
+  background-color: #c0e8bc;
 }
 </style>

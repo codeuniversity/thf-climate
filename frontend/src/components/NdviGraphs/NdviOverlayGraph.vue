@@ -53,7 +53,7 @@
           })
   
           const layout = {
-            title: 'NDVI of Tempelhofer Feld - Yearly Overlay (2018-2024)',
+            title: 'NDVI - Yearly Overlay (2018-2024)',
             xaxis: { 
               title: '', 
               tickmode: 'array', 

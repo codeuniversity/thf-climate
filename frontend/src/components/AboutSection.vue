@@ -1,5 +1,5 @@
 <template>
-    <v-container class="about-section" fluid>
+    <v-container class="about-section pt-16" fluid>
       <v-row justify="center">
         <v-col cols="12" md="10">
           <h3>A CODE University Professor-led Project </h3>
@@ -14,7 +14,8 @@
           </p>
           <p class="about-text pt-4">
             The success of this project was made possible by the collaborative efforts of our team members:
-            <ul>
+          </p>
+          <ul class="pt-4">
               <li>[team member]</li>
               <li>[team member]</li>
               <li>[team member]</li>
@@ -22,9 +23,11 @@
               <li>[team member]</li>
               <li>[team member]</li>
             </ul>
-          </p>
           <p class="about-text pt-4">
             Looking ahead, we hope this work inspires further studies and applications in urban climate resilience.
+          </p>
+          <p class="about-text pt-4">
+            [insert github repo link]
           </p>
         </v-col>
       </v-row>
@@ -44,8 +47,8 @@
   
   <style scoped>
   .about-section {
-    margin: 50px 0;
     text-align: center;
+    height: 100vh;
   }
   
   .about-text {

@@ -77,7 +77,7 @@ export default {
         }
 
         const layout = {
-          title: `NDVI of Tempelhofer Feld (${month.value})`,
+          title: `NDVI in ${month.value}`,
           xaxis: { title: '' },
           yaxis: { title: 'NDVI Value' }
         }

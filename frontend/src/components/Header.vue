@@ -1,5 +1,5 @@
 <template>
-  <v-container class="header-container pa-0" fluid>
+  <v-container class="header-container pa-0 mb-0" fluid>
     <img src="@/assets/images/Berlin_Tempelhofer_Feld_UAV_05-2017.jpg" class="header-image">
       <div class="overlay">
         <h1 class="title">Climates of Tempelhofer Feld</h1>

@@ -31,13 +31,13 @@
   
   <style scoped>
   img {
-    width: 450px;
+    width: 100%;
     padding: 15px;
   }
 
   p {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-weight: 300;
   }
   </style>
