@@ -3,7 +3,7 @@
     <img src="@/assets/images/Berlin_Tempelhofer_Feld_UAV_05-2017.jpg" class="header-image">
       <div class="overlay">
         <h1 class="title">Climates of Tempelhofer Feld</h1>
-        <h2 class="subtitle">A data visualization project</h2>
+        <h2 class="subtitle">An Earth Observation Project</h2>
         <v-btn icon density="comfortable">
           <v-icon>mdi-chevron-down</v-icon>
         </v-btn>
@@ -46,6 +46,7 @@ export default {
 
 .title {
   font-weight: bold;
+  font-size: 3.5rem;
 }
 
 .subtitle {

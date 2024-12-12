@@ -1,11 +1,11 @@
 <template>
-  <h1 id="app">
+  <div id="app">
     <Header />
     <IntroSection />
     <MainSection />
     <AboutSection />
     <Footer />
-  </h1>
+  </div>
 </template>
 
 <script>
