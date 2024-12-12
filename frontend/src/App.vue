@@ -3,6 +3,7 @@
     <Header />
     <IntroSection />
     <MainSection />
+    <AboutSection />
     <Footer />
   </h1>
 </template>
@@ -12,6 +13,7 @@
   import IntroSection from "./components/IntroSection.vue"
   import MainSection from "./components/MainSection.vue"
   import Footer from "./components/Footer.vue"
+  import AboutSection from "./components/AboutSection.vue"
 
   export default {
     name: 'App',
@@ -19,7 +21,8 @@
       Header,
       IntroSection,
       MainSection,
-      Footer
+      Footer,
+      AboutSection
     }
   }
 </script>
