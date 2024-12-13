@@ -242,13 +242,17 @@ p {
 
 .left-column {
   background-color: #d6f5d3;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto; 
 }
 
 
 .sticky-left {
   position: sticky;
   top: 0px;
-  height: fit-content;
+  height: 100vh;
   align-self: flex-start;
 }
 </style>
