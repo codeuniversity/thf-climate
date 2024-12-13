@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 class="pb-10">Yearly NDVI vs. Temperature</h2>
+    <!-- <h2 class="pb-10">Yearly NDVI vs. Temperature</h2> -->
     <v-row justify="center">
       <div ref="plotContainer" style="width: 100%; height: 400px" class="d-flex justify-center"></div>
     </v-row>
