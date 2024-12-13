@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h2>Median Monthly Temperature</h2>
+    <!-- <h2>Median Monthly Temperature</h2> -->
 
     <!-- Date Range Input Fields -->
-    <div class="date-picker">
+    <!-- <div class="date-picker">
       <label>
         Start Date:
         <input type="date" v-model="startDate" @change="updateDateRange" />
@@ -12,10 +12,10 @@
         End Date:
         <input type="date" v-model="endDate" @change="updateDateRange" />
       </label>
-    </div>
+    </div> -->
 
     <!-- Plotly Chart -->
-    <div ref="plotlyChart" style="width: 100%; height: 400px;"></div>
+    <div ref="plotlyChart" style="width: 100%; height: auto;"></div>
 
   
   </div>
@@ -30,8 +30,8 @@ export default {
   name: 'MedianTempGraph',
   setup() {
     const temperatureData = ref(null);
-    const startDate = ref('2015-01-01');
-    const endDate = ref('2023-12-31');
+    const startDate = ref('1990-01-01');
+    const endDate = ref('2024-11-30');
     const plotData = ref([]);
     const plotlyChart = ref(null);
 
@@ -44,7 +44,7 @@ export default {
         endDate: new Date(endDate.value).getTime() / 1000,
         location: "TEMPELHOFER_FELD",
         temporalResolution: "MONTHLY",
-        aggregation: "MEDIAN",
+        aggregation: "MEAN",
       };
 
       try {
@@ -81,7 +81,7 @@ export default {
 
     const renderPlot = () => {
       const layout = {
-        title: 'Median Monthly Temperature for Tempelhofer Feld (2015 - 2023)',
+        title: 'Mean Monthly Temperature (1990 - 2024)',
         xaxis: { title: '', type: 'date', rangeslider: { visible: true } },
         yaxis: { title: 'Temperature (°C)' },
         template: 'plotly_white'

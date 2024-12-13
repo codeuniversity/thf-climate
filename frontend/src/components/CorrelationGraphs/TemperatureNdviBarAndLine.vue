@@ -1,6 +1,5 @@
 <template>
 <v-container>
-  <h2 class="pb-10">Temperature vs. NDVI</h2>
   <v-row justify="center">
     <div
       id="plotlyGraphTemperatureNdvi"

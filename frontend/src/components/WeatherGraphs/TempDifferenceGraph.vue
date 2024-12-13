@@ -1,9 +1,9 @@
 <template>
     <div>
-      <h2>{{ graphTitle }}</h2>
+      <!-- <h2>{{ graphTitle }}</h2> -->
   
       <!-- Month Picker -->
-      <div class="date-picker">
+      <!-- <div class="date-picker">
         <label>
           Select Month:
           <select v-model="selectedMonth" @change="updateGraph">
@@ -12,10 +12,10 @@
             </option>
           </select>
         </label>
-      </div>
+      </div> -->
   
       <!-- Plotly Chart -->
-      <div ref="plotlyChart" style="width: 100%; height: 400px;"></div>
+      <div ref="plotlyChart" style="width: 100%; height: auto;"></div>
     </div>
   </template>
   
@@ -52,7 +52,7 @@
       const graphTitle = computed(() => {
         return `Difference from Mean Temperature (1990-2008) in ${
           months.value[selectedMonth.value]
-        } for Tempelhofer Feld`;
+        }`;
       });
   
       // Fetch and calculate historical means for all months (1990-2008)

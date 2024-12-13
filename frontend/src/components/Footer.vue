@@ -1,5 +1,5 @@
 <template>
-  <v-container class="footer-container" fluid>
+  <v-container class="footer-container pt-10" fluid>
     <p class="footer-text">CODE University of Applied Sciences, 2024</p>
   </v-container>
 </template>
@@ -10,8 +10,8 @@
 
 <style scoped>
 .footer-container {
-  margin: 50px 0 0 0;
   text-align: center;
+  background-color: #e8fae6;
 }
 
 .footer-text {
