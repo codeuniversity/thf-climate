@@ -2,40 +2,43 @@
   <v-app>
     <v-container fluid class="pa-3">
       <!-- Temperature Section -->
-      <v-row id="temperature-section">
-        <v-col :cols="4" class="left-column">
-          <section>
-            <h3 class="pb-4">Temperature</h3>
-            <p>
-              Over the years, temperatures have shown an overall increase, a clear indicator of climate change. This trend is evident when we look at the historical data of Tempelhofer Feld.
-            </p>
-            <p class="pt-6">
-              The second graph on the right shows average (also called “mean”) temperatures from 1990 to 2008 and how other years differ. Longer red bars indicate warmer years; longer blue bars indicate cooler years. Tempelhof Airport closed in 2008 so that year marks the end of the reference period. Understanding these differences helps us see climate change patterns and impacts. August shows the most extreme deviations.
-            </p>
+      <div class="section" id="temperature-section">
+        <v-row>
+          <v-col :cols="4" class="left-column sticky-left">
+            <section :class="{ active: activeSection === 'temperature-section' }">
+              <h3 class="pb-4">Temperature</h3>
+              <p>
+                Over the years, temperatures have shown an overall increase, a clear indicator of climate change. This trend is evident when we look at the historical data of Tempelhofer Feld.
+              </p>
+              <p class="pt-6">
+                The second graph on the right shows average (also called “mean”) temperatures from 1990 to 2008 and how other years differ. Longer red bars indicate warmer years; longer blue bars indicate cooler years. Tempelhof Airport closed in 2008 so that year marks the end of the reference period. Understanding these differences helps us see climate change patterns and impacts. August shows the most extreme deviations.
+              </p>
 
-            <!-- TODO: -->
-            <!-- <p class="pt-6">
-              [move month select for difference graph here]
-            </p> -->
-          </section>
-        </v-col>
+              <!-- TODO: -->
+              <!-- <p class="pt-6">
+                [move month select for difference graph here]
+              </p> -->
+            </section>
+          </v-col>
 
-        <v-col :cols="8">
-          <section>
-            <v-container>
-              <MedianTempGraph />
-              <TempDifferenceGraph />
-            </v-container>
-          </section>
-        </v-col>
-      </v-row>
+          <v-col :cols="8">
+            <section>
+              <v-container>
+                <MedianTempGraph />
+                <TempDifferenceGraph />
+              </v-container>
+            </section>
+          </v-col>
+        </v-row>
+      </div>
 
       <!-- NDVI Section -->
-      <v-row id="ndvi-explanation-section">
-        <v-col :cols="4" class="left-column">
-          <section>
-            <h3 class="pb-4">NDVI Explanation</h3>
-            <p>
+      <div class="section" id="ndvi-explanation-section">
+        <v-row>
+          <v-col :cols="4" class="left-column sticky-left">
+            <section :class="{ active: activeSection === 'ndvi-explanation-section' }">
+              <h3 class="pb-4">NDVI Explanation</h3>
+              <p>
               We chose to look at the health of the plant life on the field (we'll refer to this as "vegetation"). One way to understand the health of vegetation on a large area of land is to look at satellite pictures of it. Or, more precisely, using vegetation indices. These are various combinations of the different wavelengths ("colors") that satellites record. The most notable one is the normalized difference vegetation index or NDVI.
             </p>
             <p class="pt-6">
@@ -63,22 +66,24 @@
                 Equation: <strong>NDVI = (NIR-RED) / (NIR+RED)</strong>
               </p>
             </div>
-          </section>
-        </v-col>
+            </section>
+          </v-col>
 
-        <v-col :cols="8">
-          <section>
-            <v-container>
-              <Images />
-            </v-container>
-          </section>
-        </v-col>
-      </v-row>
+          <v-col :cols="8">
+            <section>
+              <v-container>
+                <Images />
+              </v-container>
+            </section>
+          </v-col>
+        </v-row>
+      </div>
 
       <!-- NDVI Graph Section -->
-      <v-row id="ndvi-results-section">
-        <v-col :cols="4" class="left-column">
-          <section>
+      <div class="section" id="ndvi-results-section">
+        <v-row>
+        <v-col :cols="4" class="left-column sticky-left">
+          <section :class="{ active: activeSection === 'ndvi-results-section' }">
             <h3 class="pb-4">NDVI Results</h3>
             <p>
               Our observations of NDVI values across the study area generally ranged between 0.2 and 0.7. One of the lowest recorded values was in December 2018, with an NDVI of 0.1706, while one of the highest was in November 2022, with an NDVI of 0.7010. The data we collected could be improved with more cleaning, as the area includes large concrete sections, is roughly defined, and contains inconsistencies due to changes in land use and purpose over time (like creating the gardening area and introducing sheep).
@@ -104,11 +109,14 @@
           </section>
         </v-col>
       </v-row>
+      </div>
+      
 
       <!-- Temperature vs. NDVI Section -->
-      <v-row id="correlations-section">
-        <v-col :cols="4" class="left-column">
-          <section>
+      <div class="section" id="correlations-section">
+        <v-row>
+        <v-col :cols="4" class="left-column sticky-left">
+          <section :class="{ active: activeSection === 'correlations-section' }">
             <h3 class="pb-4">Understanding the Dynamics of Tempelhofer Feld’s Temperature and Vegetation</h3>
             <p>
               The graph on the right illustrates two critical metrics: the yearly mean temperature and the yearly mean NDVI (in general, reflecting the health and density of plant life). 
@@ -136,11 +144,13 @@
           </section>
         </v-col>
       </v-row>
+      </div>
 
       <!-- Conclusion -->
-      <v-row id="conclusion-section">
-        <v-col :cols="4" class="left-column pb-16">
-          <section>
+      <div class="section" id="conclusion-section">
+        <v-row>
+        <v-col :cols="4" class="left-column sticky-left pb-16">
+          <section :class="{ active: activeSection === 'correlations-section' }">
             <h3 class="pb-4">What We Learned and What Comes Next</h3>
             <p>
               The analysis underscores the growing significance of earth observation tools, like satellite imagery and NDVI metrics, in monitoring urban green spaces such as Tempelhofer Feld. These tools provide insights into how ecosystems respond to climate change and enable data-driven decision-making for urban planning and conservation.
@@ -166,75 +176,58 @@
           </section>
         </v-col>
       </v-row>
+      </div>
     </v-container>
   </v-app>
 </template>
 
 <script>
-import YearlyTemperatureNdviCorrelation from './CorrelationGraphs/YearlyTemperatureNdviCorrelation.vue'
-import MedianTempGraph from './WeatherGraphs/MedianTempGraph.vue'
-import TempDifferenceGraph from './WeatherGraphs/TempDifferenceGraph.vue'
-import Images from './Images.vue'
-import YearlyNdviPlot from './NdviGraphs/YearlyNdvi.vue'
-import NdviSelectMonthGraph from './NdviGraphs/NdviSelectMonthGraph.vue'
-import NdviOverlayGraph from './NdviGraphs/NdviOverlayGraph.vue'
+import MedianTempGraph from './WeatherGraphs/MedianTempGraph.vue';
+import TempDifferenceGraph from './WeatherGraphs/TempDifferenceGraph.vue';
+import Images from './Images.vue';
+import YearlyNdviPlot from './NdviGraphs/YearlyNdvi.vue';
+import NdviSelectMonthGraph from './NdviGraphs/NdviSelectMonthGraph.vue';
+import NdviOverlayGraph from './NdviGraphs/NdviOverlayGraph.vue';
+import YearlyTemperatureNdviCorrelation from './CorrelationGraphs/YearlyTemperatureNdviCorrelation.vue';
 
 export default {
-  name: "MainSection",
+  name: 'MainSection',
   components: {
     MedianTempGraph,
     TempDifferenceGraph,
-    YearlyTemperatureNdviCorrelation,
     Images,
     YearlyNdviPlot,
     NdviSelectMonthGraph,
     NdviOverlayGraph,
+    YearlyTemperatureNdviCorrelation,
   },
   data() {
     return {
+      activeSection: null,
       isExpanded: false,
-    }
+    };
   },
   methods: {
     toggleExpand() {
       this.isExpanded = !this.isExpanded
     },
-    scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId)
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }
   },
   mounted() {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          this.scrollToSection(entry.target.id)
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.activeSection = entry.target.id;
+          }
+        });
       },
-      {
-        threshold: 0.3, 
-      }
+      { threshold: 0.5 }
     );
 
-    const sectionsToObserve = [
-      'temperature-section',
-      'ndvi-explanation-section',
-      'ndvi-results-section',
-      'correlations-section',
-      'conclusion-section',
-      'about-section',
-    ];
-
-    sectionsToObserve.forEach(sectionId => {
-      const section = document.getElementById(sectionId)
-      if (section) {
-        observer.observe(section)
-      }
-    })
-  }
-}
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section) => observer.observe(section));
+  },
+};
 </script>
 
 <style scoped>
@@ -249,5 +242,13 @@ p {
 
 .left-column {
   background-color: #d6f5d3;
+}
+
+
+.sticky-left {
+  position: sticky;
+  top: 0px;
+  height: fit-content;
+  align-self: flex-start;
 }
 </style>

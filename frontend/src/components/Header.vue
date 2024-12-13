@@ -31,7 +31,7 @@ export default {
         }
       },
       {
-        threshold: 0.3,
+        threshold: 0.5,
       }
     );
     
