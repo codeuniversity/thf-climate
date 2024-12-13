@@ -17,6 +17,7 @@
           </p>
           <ul class="pt-4">
               <li>Essam Ali</li>
+              <li>Abdul Sanni</li>
               <li>Till Ermold</li>
               <li>Tom Lustig</li>
               <li>Jules Morley</li>
