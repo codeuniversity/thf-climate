@@ -38,7 +38,7 @@
               class="image"
             />
             <p class="caption">
-              <a href="https://www.flickr.com/people/gojade/">© Jan Gold</a>
+              <a href="https://www.flickr.com/people/29949005@N02/">© Berlin-Knipser</a>
             </p>
           </v-col>
           <v-col cols="12" md="5" class="d-flex flex-column align-items-center mx-4">
@@ -48,7 +48,7 @@
               class="image"
             />
             <p class="caption">
-              <a href="https://www.flickr.com/people/29949005@N02/">© Berlin-Knipser</a>
+              <a href="https://www.flickr.com/people/gojade/">© Jan Gold</a>
             </p>
           </v-col>
         </v-row>
