@@ -44,7 +44,7 @@ export default {
         endDate: new Date(endDate.value).getTime() / 1000,
         location: "TEMPELHOFER_FELD",
         temporalResolution: "MONTHLY",
-        aggregation: "MEDIAN",
+        aggregation: "MEAN",
       };
 
       try {
@@ -81,7 +81,7 @@ export default {
 
     const renderPlot = () => {
       const layout = {
-        title: 'Median Monthly Temperature (1990 - 2024)',
+        title: 'Mean Monthly Temperature (1990 - 2024)',
         xaxis: { title: '', type: 'date', rangeslider: { visible: true } },
         yaxis: { title: 'Temperature (°C)' },
         template: 'plotly_white'
