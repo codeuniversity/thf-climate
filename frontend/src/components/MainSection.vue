@@ -164,16 +164,12 @@
           </section>
         </v-col>
 
-        <v-col :cols="8">
-          <section>
-            <v-container>
+        <v-col :cols="8" class="no-padding">
               <img
                 src="@/assets/images/thf-sunset.jpg"
                 alt="Tempelhofer Feld at sunset"
                 style="width: 100%;"
               />
-            </v-container>
-          </section>
         </v-col>
       </v-row>
       </div>
@@ -254,5 +250,8 @@ p {
   top: 0px;
   height: 100vh;
   align-self: flex-start;
+}
+.no-padding {
+  padding: 0;
 }
 </style>
