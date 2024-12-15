@@ -49,40 +49,49 @@ export default {
       "December",
     ]
 
-    const renderPlot = () => {
-      if (props.ndviData && props.ndviData.data) {
-        const monthIndex = monthOptions.indexOf(month.value) + 1
-        const filteredData = props.ndviData.data.filter(
-          (d) => new Date(d.timestamp * 1000).getMonth() + 1 === monthIndex,
-        )
+const getFilteredDataByMonth = (data, monthValue) => {
+  const monthIndex = monthOptions.indexOf(monthValue) + 1
+  return data.filter(
+    (d) => new Date(d.timestamp * 1000).getMonth() + 1 === monthIndex
+  )
+}
 
-        const years = filteredData.map((d) =>
-          new Date(d.timestamp * 1000).getFullYear(),
-        )
-        const values = filteredData.map((d) => d.value)
+const getYearsAndValues = (filteredData) => {
+  const years = filteredData.map((d) =>
+    new Date(d.timestamp * 1000).getFullYear()
+  )
+  const values = filteredData.map((d) => d.value)
+  return { years, values }
+}
 
-        const trace = {
-          x: years,
-          y: values,
-          mode: "lines+markers",
-          type: "bar",
-          name: "",
-          marker: { color: "green" },
-        }
+const renderPlot = () => {
+  if (props.ndviData && props.ndviData.data) {
+    const filteredData = getFilteredDataByMonth(props.ndviData.data, month.value)
+    const { years, values } = getYearsAndValues(filteredData)
 
-        const layout = {
-          title: `NDVI in ${month.value}`,
-          xaxis: { title: "" },
-          yaxis: { title: "NDVI Value" },
-        }
-
-        Plotly.newPlot("plotlyGraphNdviMonthly", [trace], layout)
-      }
+    const trace = {
+      x: years,
+      y: values,
+      mode: "lines+markers",
+      type: "bar",
+      name: "",
+      marker: { color: "green" },
     }
+
+    const layout = {
+      title: `NDVI in ${month.value}`,
+      xaxis: { title: "" },
+      yaxis: { title: "NDVI Value" },
+    }
+
+    Plotly.newPlot("plotlyGraphNdviMonthly", [trace], layout)
+  }
+}
+
 
     watch(month, renderPlot)
     watch(() => props.ndviData, renderPlot)
-
+    
     return {
       monthOptions,
       month,
