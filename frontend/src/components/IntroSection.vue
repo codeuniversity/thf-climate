@@ -78,18 +78,18 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue"
+
 export default {
   name: "IntroSection",
-  data() {
-    return {
-      isNavigationOpen: false,
+  setup() {
+    const isNavigationOpen = ref(false)
+
+    const toggleNavigation = () => {
+      isNavigationOpen.value = !isNavigationOpen.value
     }
-  },
-  methods: {
-    toggleNavigation() {
-      this.isNavigationOpen = !this.isNavigationOpen
-    },
-    scrollToTemperature() {
+
+    const scrollToTemperature = () => {
       const temperatureSection = document.getElementById("temperature-section")
       if (temperatureSection) {
         temperatureSection.scrollIntoView({
@@ -97,25 +97,31 @@ export default {
           block: "start",
         })
       }
-    },
-  },
-  mounted() {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          this.scrollToTemperature()
-        }
-      },
-      {
-        threshold: 0.5,
-      },
-    )
-
-    const temperatureSection = document.getElementById("temperature-section")
-    if (temperatureSection) {
-      observer.observe(temperatureSection)
     }
-  },
+
+    onMounted(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            scrollToTemperature()
+          }
+        },
+        {
+          threshold: 0.5,
+        },
+      )
+
+      const temperatureSection = document.getElementById("temperature-section")
+        if (temperatureSection) {
+          observer.observe(temperatureSection)
+        }
+    })
+
+    return {
+      isNavigationOpen,
+      toggleNavigation,
+    }
+  }
 }
 </script>
 

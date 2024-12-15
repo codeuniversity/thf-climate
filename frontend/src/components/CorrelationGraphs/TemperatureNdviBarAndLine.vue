@@ -13,7 +13,7 @@
 <script>
 import axios from "axios"
 import Plotly from "plotly.js-dist-min"
-import { onMounted, ref, render } from "vue"
+import { onMounted, ref } from "vue"
 
 export default {
   name: "TemperatureNdviBarAndLine",

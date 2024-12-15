@@ -13,31 +13,38 @@
 </template>
 
 <script>
+import { onMounted } from 'vue'
+
 export default {
   name: 'Header',
-  methods: {
-    scrollToIntro() {
+  setup() {
+    const scrollToIntro = () => {
       const introSection = document.getElementById('introduction-section')
       if (introSection) {
         introSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     }
-  },
-  mounted() {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          this.scrollToIntro()
+
+    onMounted(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            scrollToIntro()
+          }
+        },
+        {
+          threshold: 0.5,
         }
-      },
-      {
-        threshold: 0.5,
+      );
+      
+      const introSection = document.getElementById('introduction-section')
+      if (introSection) {
+        observer.observe(introSection)
       }
-    );
-    
-    const introSection = document.getElementById('introduction-section')
-    if (introSection) {
-      observer.observe(introSection)
+    })
+
+    return {
+      scrollToIntro
     }
   }
 }

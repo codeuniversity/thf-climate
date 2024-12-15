@@ -269,6 +269,7 @@ import YearlyNdviPlot from "./NdviGraphs/YearlyNdvi.vue"
 import NdviSelectMonthGraph from "./NdviGraphs/NdviSelectMonthGraph.vue"
 import NdviOverlayGraph from "./NdviGraphs/NdviOverlayGraph.vue"
 import YearlyTemperatureNdviCorrelation from "./CorrelationGraphs/YearlyTemperatureNdviCorrelation.vue"
+import { ref, onMounted } from "vue"
 
 export default {
   name: "MainSection",
@@ -281,31 +282,35 @@ export default {
     NdviOverlayGraph,
     YearlyTemperatureNdviCorrelation,
   },
-  data() {
-    return {
-      activeSection: null,
-      isExpanded: false,
-    }
-  },
-  methods: {
-    toggleExpand() {
-      this.isExpanded = !this.isExpanded
-    },
-  },
-  mounted() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            this.activeSection = entry.target.id
-          }
-        })
-      },
-      { threshold: 0.5 },
-    )
+  setup() {
+    const activeSection = ref(null)
+    const isExpanded = ref(false)
 
-    const sections = document.querySelectorAll(".section")
-    sections.forEach((section) => observer.observe(section))
+    const toggleExpand = () => {
+      isExpanded.value = !isExpanded.value
+    }
+
+    onMounted(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              activeSection.value = entry.target.id
+            }
+          })
+        },
+        { threshold: 0.5 }
+      )
+
+      const sections = document.querySelectorAll('.section')
+      sections.forEach((section) => observer.observe(section))
+    })
+
+    return {
+      activeSection,
+      isExpanded,
+      toggleExpand,
+    }
   },
 }
 </script>
