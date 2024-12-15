@@ -23,17 +23,23 @@ export default {
   setup(props) {
     const years = [2018, 2019, 2020, 2021, 2022, 2023, 2024]
 
+    const getFilteredDataByYear = (data, year) => {
+      return data.filter(
+        (d) => new Date(d.timestamp * 1000).getFullYear() === year
+      )
+    }
+
+    const getMonthsAndValues = (filteredData) => {
+      const months = filteredData.map((d) => new Date(d.timestamp * 1000).getMonth() + 1)
+      const values = filteredData.map((d) => d.value)
+      return { months, values }
+    }
+
     const renderPlot = () => {
       if (props.ndviData && props.ndviData.data) {
         const traces = years.map((year) => {
-          const filteredData = props.ndviData.data.filter(
-            (d) => new Date(d.timestamp * 1000).getFullYear() === year,
-          )
-
-          const months = filteredData.map(
-            (d) => new Date(d.timestamp * 1000).getMonth() + 1,
-          )
-          const values = filteredData.map((d) => d.value)
+          const filteredData = getFilteredDataByYear(props.ndviData.data, year)
+          const { months, values } = getMonthsAndValues(filteredData)
 
           return {
             x: months,
@@ -52,18 +58,8 @@ export default {
             tickmode: "array",
             tickvals: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             ticktext: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
+              "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
             ],
           },
           yaxis: { title: "NDVI Value" },
@@ -72,6 +68,7 @@ export default {
         Plotly.newPlot("plotlyGraphNdviOverlay", traces, layout)
       }
     }
+
 
     watch(() => props.ndviData, renderPlot)
 
