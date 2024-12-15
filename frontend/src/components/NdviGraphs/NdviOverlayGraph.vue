@@ -11,34 +11,22 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue"
-import axios from "axios"
+import { watch } from "vue"
 import Plotly from "plotly.js-dist-min"
 
 export default {
   name: "NdviComparisonOverlay",
-  setup() {
-    const ndviData = ref(null)
-    const startDate = ref(1514761200) // 2018-01-01
-    const endDate = ref(1733007599) // 2024-11-30
+  props: {
+    ndviData: Object,
+    required: true,
+  },
+  setup(props) {
     const years = [2018, 2019, 2020, 2021, 2022, 2023, 2024]
 
-    const fetchNdviData = async (params) => {
-      const apiUrl =
-        "https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi"
-      try {
-        const response = await axios.get(apiUrl, { params })
-        ndviData.value = response.data
-        renderPlot()
-      } catch (error) {
-        console.error("Error fetching NDVI data:", error)
-      }
-    }
-
     const renderPlot = () => {
-      if (ndviData.value && ndviData.value.data) {
+      if (props.ndviData && props.ndviData.data) {
         const traces = years.map((year) => {
-          const filteredData = ndviData.value.data.filter(
+          const filteredData = props.ndviData.data.filter(
             (d) => new Date(d.timestamp * 1000).getFullYear() === year,
           )
 
@@ -85,19 +73,9 @@ export default {
       }
     }
 
-    onMounted(() => {
-      const params = {
-        startDate: startDate.value,
-        endDate: endDate.value,
-        location: "TEMPELHOFER_FELD",
-        temporalResolution: "MONTHLY",
-        aggregation: "MEAN",
-      }
-      fetchNdviData(params)
-    })
+    watch(() => props.ndviData, renderPlot)
 
     return {
-      ndviData,
       years,
     }
   },

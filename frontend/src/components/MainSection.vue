@@ -155,9 +155,9 @@
           <v-col :cols="8">
             <section>
               <v-container>
-                <YearlyNdviPlot />
-                <NdviSelectMonthGraph />
-                <NdviOverlayGraph />
+                <YearlyNdviPlot :ndvi-data="ndviData" />
+                <NdviSelectMonthGraph :ndvi-data="ndviData" />
+                <NdviOverlayGraph :ndvi-data="ndviData" />
               </v-container>
             </section>
           </v-col>
@@ -270,6 +270,7 @@ import NdviSelectMonthGraph from "./NdviGraphs/NdviSelectMonthGraph.vue"
 import NdviOverlayGraph from "./NdviGraphs/NdviOverlayGraph.vue"
 import YearlyTemperatureNdviCorrelation from "./CorrelationGraphs/YearlyTemperatureNdviCorrelation.vue"
 import { ref, onMounted } from "vue"
+import axios from "axios"
 
 export default {
   name: "MainSection",
@@ -283,14 +284,40 @@ export default {
     YearlyTemperatureNdviCorrelation,
   },
   setup() {
+    const ndviData = ref(null)
+    const startDate = ref(1514761200) // 2018-01-01
+    const endDate = ref(1733007599) // 2024-11-30
+
     const activeSection = ref(null)
     const isExpanded = ref(false)
+
+    const fetchNdviData = async () => {
+      const apiUrl =
+        "https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi"
+      try {
+        const response = await axios.get(apiUrl, {
+          params: {
+            startDate: startDate.value,
+            endDate: endDate.value,
+            location: "TEMPELHOFER_FELD",
+            temporalResolution: "MONTHLY",
+            aggregation: "MEAN",
+          },
+        })
+        ndviData.value = response.data
+        console.log(ndviData.value)
+      } catch (error) {
+        console.error("Error fetching NDVI data:", error)
+      }
+    }
 
     const toggleExpand = () => {
       isExpanded.value = !isExpanded.value
     }
 
     onMounted(() => {
+      fetchNdviData()
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -307,6 +334,7 @@ export default {
     })
 
     return {
+      ndviData,
       activeSection,
       isExpanded,
       toggleExpand,
