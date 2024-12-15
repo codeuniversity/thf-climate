@@ -285,27 +285,27 @@ export default {
   },
   setup() {
     const ndviData = ref(null)
-    const startDate = ref(1514761200) // 2018-01-01
-    const endDate = ref(1733007599) // 2024-11-30
-
+    const startTimestamp = ref(1514761200) // 2018-01-01
+    const endTimestamp = ref(1733007599) // 2024-11-30
+    const location = ref("TEMPELHOFER_FELD")
+    
     const activeSection = ref(null)
     const isExpanded = ref(false)
 
+    const apiUrl = "https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi"
+
     const fetchNdviData = async () => {
-      const apiUrl =
-        "https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi"
       try {
         const response = await axios.get(apiUrl, {
           params: {
-            startDate: startDate.value,
-            endDate: endDate.value,
-            location: "TEMPELHOFER_FELD",
+            startDate: startTimestamp.value,
+            endDate: endTimestamp.value,
+            location: location.value,
             temporalResolution: "MONTHLY",
             aggregation: "MEAN",
           },
         })
         ndviData.value = response.data
-        console.log(ndviData.value)
       } catch (error) {
         console.error("Error fetching NDVI data:", error)
       }
@@ -315,9 +315,7 @@ export default {
       isExpanded.value = !isExpanded.value
     }
 
-    onMounted(() => {
-      fetchNdviData()
-
+    const observeSections = () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -331,6 +329,11 @@ export default {
 
       const sections = document.querySelectorAll('.section')
       sections.forEach((section) => observer.observe(section))
+    }
+
+    onMounted(() => {
+      fetchNdviData()
+      observeSections()
     })
 
     return {
