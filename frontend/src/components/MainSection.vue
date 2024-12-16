@@ -34,7 +34,7 @@
           <v-col :cols="8">
             <section>
               <v-container>
-                <MedianTempGraph />
+                <MeanTempGraph />
                 <TempDifferenceGraph />
               </v-container>
             </section>
@@ -262,7 +262,7 @@
 </template>
 
 <script>
-import MedianTempGraph from "./WeatherGraphs/MedianTempGraph.vue"
+import MeanTempGraph from "./WeatherGraphs/MeanTempGraph.vue"
 import TempDifferenceGraph from "./WeatherGraphs/TempDifferenceGraph.vue"
 import Images from "./Images.vue"
 import YearlyNdviPlot from "./NdviGraphs/YearlyNdvi.vue"
@@ -275,7 +275,7 @@ import axios from "axios"
 export default {
   name: "MainSection",
   components: {
-    MedianTempGraph,
+    MeanTempGraph,
     TempDifferenceGraph,
     Images,
     YearlyNdviPlot,

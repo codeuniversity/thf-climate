@@ -25,7 +25,7 @@ import axios from "axios"
 import Plotly from "plotly.js-dist-min"
 
 export default {
-  name: "MedianTempGraph",
+  name: "MeanTempGraph",
   setup() {
     const temperatureData = ref(null)
     const startDate = ref("1990-01-01")
