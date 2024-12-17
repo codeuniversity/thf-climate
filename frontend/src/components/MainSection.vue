@@ -288,11 +288,12 @@ export default {
     const startTimestamp = ref(1514761200) // 2018-01-01
     const endTimestamp = ref(1733007599) // 2024-11-30
     const location = ref("TEMPELHOFER_FELD")
-    
+
     const activeSection = ref(null)
     const isExpanded = ref(false)
 
-    const apiUrl = "https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi"
+    const apiUrl =
+      "https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi"
 
     const fetchNdviData = async () => {
       try {
@@ -324,10 +325,10 @@ export default {
             }
           })
         },
-        { threshold: 0.5 }
+        { threshold: 0.5 },
       )
 
-      const sections = document.querySelectorAll('.section')
+      const sections = document.querySelectorAll(".section")
       sections.forEach((section) => observer.observe(section))
     }
 

@@ -25,12 +25,14 @@ export default {
 
     const getFilteredDataByYear = (data, year) => {
       return data.filter(
-        (d) => new Date(d.timestamp * 1000).getFullYear() === year
+        (d) => new Date(d.timestamp * 1000).getFullYear() === year,
       )
     }
 
     const getMonthsAndValues = (filteredData) => {
-      const months = filteredData.map((d) => new Date(d.timestamp * 1000).getMonth() + 1)
+      const months = filteredData.map(
+        (d) => new Date(d.timestamp * 1000).getMonth() + 1,
+      )
       const values = filteredData.map((d) => d.value)
       return { months, values }
     }
@@ -58,8 +60,18 @@ export default {
             tickmode: "array",
             tickvals: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             ticktext: [
-              "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
             ],
           },
           yaxis: { title: "NDVI Value" },
@@ -68,7 +80,6 @@ export default {
         Plotly.newPlot("plotlyGraphNdviOverlay", traces, layout)
       }
     }
-
 
     watch(() => props.ndviData, renderPlot)
 

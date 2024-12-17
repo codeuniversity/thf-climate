@@ -112,16 +112,16 @@ export default {
       )
 
       const temperatureSection = document.getElementById("temperature-section")
-        if (temperatureSection) {
-          observer.observe(temperatureSection)
-        }
+      if (temperatureSection) {
+        observer.observe(temperatureSection)
+      }
     })
 
     return {
       isNavigationOpen,
       toggleNavigation,
     }
-  }
+  },
 }
 </script>
 
