@@ -3,33 +3,33 @@
     <h2 class="pb-10">NDVI (2018-2023)</h2>
     <v-row justify="center">
       <v-col class="py-0" style="max-width: 350px">
-        <v-select 
-          v-model="temporalResolution" 
-          :items="temporalResolutionOptions" 
-          label="Temporal Resolution" 
+        <v-select
+          v-model="temporalResolution"
+          :items="temporalResolutionOptions"
+          label="Temporal Resolution"
           variant="outlined"
           density="compact"
-          required 
+          required
         />
       </v-col>
-      <v-col 
-        v-if="temporalResolution !== 'Daily'" 
-        class="py-0" 
+      <v-col
+        v-if="temporalResolution !== 'Daily'"
+        class="py-0"
         style="max-width: 350px"
       >
-        <v-select 
-          v-model="aggregation" 
-          :items="aggregationOptions" 
+        <v-select
+          v-model="aggregation"
+          :items="aggregationOptions"
           label="Aggregation"
           variant="outlined"
           density="compact"
-          required 
+          required
         />
       </v-col>
     </v-row>
     <v-row>
-      <div 
-        id="plotlyGraphNdviComparison" 
+      <div
+        id="plotlyGraphNdviComparison"
         style="width: 100%; height: 400px"
         class="d-flex justify-center"
       ></div>
@@ -38,12 +38,12 @@
 </template>
 
 <script>
-import { ref, watch, onMounted } from 'vue'
-import axios from 'axios'
-import Plotly from 'plotly.js-dist-min'
+import { ref, watch, onMounted } from "vue"
+import axios from "axios"
+import Plotly from "plotly.js-dist-min"
 
 export default {
-  name: 'NdviComparisonGraph',
+  name: "NdviComparisonGraph",
   setup() {
     const ndviData = ref(null)
     const startDate = ref(1514761200) // 2018-01-01
@@ -54,7 +54,8 @@ export default {
     const aggregationOptions = ["Mean", "Median", "Max", "Min"]
 
     const fetchNdviData = async (params) => {
-      const apiUrl = 'https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi'
+      const apiUrl =
+        "https://thf-climate-run-1020174331409.europe-west3.run.app/index/ndvi"
       try {
         const response = await axios.get(apiUrl, { params })
         ndviData.value = response.data
@@ -66,22 +67,24 @@ export default {
 
     const renderPlot = () => {
       if (ndviData.value && ndviData.value.data) {
-        const timestamps = ndviData.value.data.map(d => new Date(d.timestamp * 1000))
-        const values = ndviData.value.data.map(d => d.value)
+        const timestamps = ndviData.value.data.map(
+          (d) => new Date(d.timestamp * 1000),
+        )
+        const values = ndviData.value.data.map((d) => d.value)
         const trace = {
           x: timestamps,
           y: values,
-          mode: 'lines+markers',
-          type: 'scatter',
-          name: '',
-          line: { color: 'blue' }
+          mode: "lines+markers",
+          type: "scatter",
+          name: "",
+          line: { color: "blue" },
         }
         const layout = {
-          title: 'NDVI of Tempelhofer Feld',
-          xaxis: { title: '', type: 'date', rangeslider: { visible: true } },
-          yaxis: { title: 'NDVI Value' },
+          title: "NDVI of Tempelhofer Feld",
+          xaxis: { title: "", type: "date", rangeslider: { visible: true } },
+          yaxis: { title: "NDVI Value" },
         }
-        Plotly.newPlot('plotlyGraphNdviComparison', [trace], layout)
+        Plotly.newPlot("plotlyGraphNdviComparison", [trace], layout)
       }
     }
 
@@ -116,9 +119,9 @@ export default {
       temporalResolution,
       aggregation,
       temporalResolutionOptions,
-      aggregationOptions
+      aggregationOptions,
     }
-  }
+  },
 }
 </script>
 
