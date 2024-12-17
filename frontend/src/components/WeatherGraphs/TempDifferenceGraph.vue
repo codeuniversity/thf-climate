@@ -27,23 +27,19 @@ import Plotly from "plotly.js-dist-min"
 export default {
   name: "TempDifferenceGraph",
   setup() {
+    // Constants for location and data configuration
+    const location = ref("TEMPELHOFER_FELD") 
+    const temporalResolution = ref("MONTHLY") 
+    const aggregation = ref("MEAN") 
     const weatherData = ref(null)
     const startDate = ref("1990-01-01")
     const endDate = ref("2024-11-30")
     const selectedMonth = ref(7) // Default to August (the most severe month) (0-indexed)
     const months = ref([
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      "January", "February", "March",
+      "April", "May", "June",
+      "July", "August", "September",
+      "October", "November","December",
     ])
     const plotData = ref([])
     const plotlyChart = ref(null)
@@ -57,15 +53,15 @@ export default {
 
     // Fetch and calculate historical means for all months (1990-2008)
     const fetchHistoricalMeans = async () => {
-      const apiUrl =
-        "https://thf-climate-run-1020174331409.europe-west3.run.app/weather/index"
+      const apiUrl = "https://thf-climate-run-1020174331409.europe-west3.run.app/weather/index"
+      
       const params = {
         weatherVariable: "temperature_2m",
         startDate: new Date("1990-01-01").getTime() / 1000,
         endDate: new Date("2008-12-31").getTime() / 1000,
-        location: "TEMPELHOFER_FELD",
-        temporalResolution: "MONTHLY",
-        aggregation: "MEAN",
+        location: location.value,
+        temporalResolution: temporalResolution.value,
+        aggregation: aggregation.value,
       }
 
       try {
@@ -80,7 +76,7 @@ export default {
           return
         }
 
-        // Calculate means for each month (0 = January, 1 = February, etc.)
+        // Calculate means for each month
         const monthlyMeans = Array(12)
           .fill(0)
           .map((_, monthIndex) => {
@@ -102,15 +98,15 @@ export default {
 
     // Fetch current weather data
     const fetchData = async () => {
-      const apiUrl =
-        "https://thf-climate-run-1020174331409.europe-west3.run.app/weather/index"
+      const apiUrl = "https://thf-climate-run-1020174331409.europe-west3.run.app/weather/index"
+      
       const params = {
         weatherVariable: "temperature_2m",
         startDate: new Date(startDate.value).getTime() / 1000,
         endDate: new Date(endDate.value).getTime() / 1000,
-        location: "TEMPELHOFER_FELD",
-        temporalResolution: "MONTHLY",
-        aggregation: "MEAN",
+        location: location.value,
+        temporalResolution: temporalResolution.value,
+        aggregation: aggregation.value,
       }
 
       try {
