@@ -11,8 +11,10 @@
    - [Docker Installation](#docker-installation)
 6. [Authentication](#authentication)
 7. [Linting and Formatting](#linting-and-formatting)
-8. [Sponsors](#sponsors)
-9. [License](#license)
+8. [CI/CD Pipeline](#ci-cd-pipeline)
+9. [Cloud Architecture](#cloud-architecture)
+10. [Sponsors](#sponsors)
+11. [License](#license)
 
 ## Project Overview
 **Tempelhof Climate Change Analysis** is a collaborative project by the CODE University software engineering group aimed at observing climate changes occurring at Tempelhof Feld by analyzing satellite images.
@@ -114,6 +116,12 @@ $HOME/.config/earthengine/credentials
 [Ruff](https://docs.astral.sh/ruff/) is used for linting and formatting.
 
 You can install the vscode extension for ruff to get linting and formatting on save [here](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+
+## CI-CD Pipeline
+![THF Project CI/CD Pipeline](CI-CD-Diagram.png)
+
+## Cloud Architecture
+![THF Project Cloud Architecture](cloud-architecture.png)
 
 ## Sponsors
 - **CODE University**
